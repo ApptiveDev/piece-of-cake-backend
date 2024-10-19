@@ -1,85 +1,39 @@
 package apptive.pieceOfCake.users.model;
 
-import apptive.pieceOfCake.authentication.oauth2.account.OAuth2Account;
+import apptive.pieceOfCake.auth.Role;
 import apptive.pieceOfCake.base.BaseEntity;
-import apptive.pieceOfCake.security.AuthorityType;
-import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.Builder;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.util.Assert;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.Where;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.stream.Collectors;
-
+@Getter
+@Setter
 @Entity
-@Table(name = "TBL_USER")
-@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@SuperBuilder
+@NoArgsConstructor
+@Where(clause = "is_deleted = 0")
 public class User extends BaseEntity {
 
-    @Column(nullable = false, length = 20)
-    private String name;
+    // 일반 로그인 시 사용
+    private String loginId; // 로그인 아이디
+    private String loginPwd; // 로그인 비밀번호
 
-    @Column(unique = true)
-    private String email;
+    // 소셜 로그인 시 사용
+    private String provider; // kakao, naver
+    private String providerId; // 해당 OAuth 의 key(id)
 
-    @Column(nullable = false, unique = true)
-    private String username;
-
-    private String password;
-
-    @Enumerated(value = EnumType.STRING)
-    private UserType type;
-
-    @ElementCollection(targetClass = AuthorityType.class)
-    @CollectionTable(name = "TBL_USER_AUTHORITY", joinColumns = @JoinColumn(name = "USER_ID"))
+    @Column(nullable = false)
+    private String name; // 이름
+    @Column(nullable = false)
+    private String phoneNum; // 전화번호
+    @Column(nullable = false)
+    private String email; // 이메일
     @Enumerated(EnumType.STRING)
-    private List<AuthorityType> authorities = new ArrayList<>();
-
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "SOCIAL_ID")
-    private OAuth2Account social;
-
-    @Builder
-    public User(String username, String name, String email, String password, UserType type) {
-        this.username = username;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.authorities.add(AuthorityType.ROLE_MEMBER);
-        this.type = type;
-    }
-
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities.stream().map(authority -> new SimpleGrantedAuthority(authority.toString())).collect(Collectors.toList());
-    }
-
-    public void updateName(String name) {
-        this.name = name;
-    }
-
-    public void updateEmail(String email) {
-        this.email = email;
-        //일반 계정이라면 username 도 함께 변경해준다.
-        if (type.equals(UserType.DEFAULT))
-            this.username = email;
-    }
-
-    public void linkSocial(OAuth2Account oAuth2Account) {
-        Assert.state(social == null, "하나의 소셜 서비스만 연동할 수 있습니다.");
-        this.social = oAuth2Account;
-        oAuth2Account.linkUser(this);
-    }
-
-    public void unlinkSocial() {
-        Assert.state(type.equals(UserType.DEFAULT), "소셜 계정으로 가입된 계정은 연동 해제가 불가능합니다.");
-        Assert.state(social != null, "연동된 소셜 계정 정보가 없습니다.");
-        this.social.unlinkUser();
-        this.social = null;
-    }
+    private Role role; //ADMIN, STORE, USER
 }
