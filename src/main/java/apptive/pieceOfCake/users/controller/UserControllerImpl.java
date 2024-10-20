@@ -1,21 +1,29 @@
 package apptive.pieceOfCake.users.controller;
 
+import apptive.pieceOfCake.base.impl.BaseControllerImpl;
+import apptive.pieceOfCake.base.impl.BaseServiceImpl;
+import apptive.pieceOfCake.users.model.User;
 import apptive.pieceOfCake.users.model.request.UserRequest;
 import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
 import apptive.pieceOfCake.users.model.response.UserMyPageResponse;
+import apptive.pieceOfCake.users.model.response.UserResponse;
+import apptive.pieceOfCake.users.repository.UserRepository;
 import apptive.pieceOfCake.users.service.UserService;
 import jakarta.validation.Valid;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequiredArgsConstructor
 @RequestMapping("/user")
-public class UserControllerImpl implements UserController{
+public class UserControllerImpl extends BaseControllerImpl<User, UserResponse, UserRepository> implements UserController{
 
     private final UserService userService;
+
+    public UserControllerImpl(BaseServiceImpl<User, UserResponse, UserRepository> baseService, UserService userService) {
+        super(baseService);
+        this.userService = userService;
+    }
 
     @Override
     @PostMapping("/save")
@@ -42,3 +50,4 @@ public class UserControllerImpl implements UserController{
         return new ResponseEntity<>(userMyPageResponse, HttpStatus.OK);
     }
 }
+

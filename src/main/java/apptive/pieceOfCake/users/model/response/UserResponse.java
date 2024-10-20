@@ -4,10 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UserMyPageResponse {
+public class UserResponse {
 
     Long userId;
     String name;
-    String phoneNum;
-    String email;
 }

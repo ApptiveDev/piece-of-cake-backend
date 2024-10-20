@@ -1,12 +1,16 @@
 package apptive.pieceOfCake.users.controller;
 
+import apptive.pieceOfCake.base.BaseController;
+import apptive.pieceOfCake.users.model.User;
 import apptive.pieceOfCake.users.model.request.UserRequest;
 import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
 import apptive.pieceOfCake.users.model.response.UserMyPageResponse;
+import apptive.pieceOfCake.users.model.response.UserResponse;
+import apptive.pieceOfCake.users.repository.UserRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
-public interface UserController {
+public interface UserController extends BaseController<User, UserResponse, UserRepository> {
 
     ResponseEntity<Long> save(UserRequest userRequest); // 회원가입
     ResponseEntity<UserMyPageResponse> find(@PathVariable Long userId); // 마이페이지
