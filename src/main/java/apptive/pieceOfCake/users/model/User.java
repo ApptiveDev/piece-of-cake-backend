@@ -1,4 +1,4 @@
-package apptive.pieceOfCake.member.model;
+package apptive.pieceOfCake.users.model;
 
 import apptive.pieceOfCake.auth.Role;
 import apptive.pieceOfCake.base.BaseEntity;
@@ -18,7 +18,7 @@ import org.hibernate.annotations.Where;
 @SuperBuilder
 @NoArgsConstructor
 @Where(clause = "is_deleted = 0")
-public class Member extends BaseEntity {
+public class User extends BaseEntity {
 
     // 일반 로그인 시 사용
     private String loginId; // 로그인 아이디
@@ -29,11 +29,11 @@ public class Member extends BaseEntity {
     private String providerId; // 해당 OAuth 의 key(id)
 
     @Column(nullable = false)
+    private String name; // 이름
+    @Column(nullable = false)
     private String phoneNum; // 전화번호
     @Column(nullable = false)
     private String email; // 이메일
-    @Column(nullable = false)
-    private String name; // 이름
     @Enumerated(EnumType.STRING)
     private Role role; //ADMIN, STORE, USER
 }
