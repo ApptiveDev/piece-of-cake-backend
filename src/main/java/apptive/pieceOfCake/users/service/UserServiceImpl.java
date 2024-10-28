@@ -24,6 +24,7 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserResponse, UserRep
     }
 
     @Override
+    @Transactional
     public Long save(UserRequest userRequest) {
 
         User user = User.builder()
