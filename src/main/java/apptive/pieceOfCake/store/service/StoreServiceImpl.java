@@ -8,15 +8,13 @@ import apptive.pieceOfCake.store.model.response.StoreResponse;
 import apptive.pieceOfCake.store.repository.StoreRepository;
 import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
 import apptive.pieceOfCake.util.S3Uploader;
-import com.amazonaws.services.s3.AmazonS3Client;
-import com.amazonaws.services.s3.model.ObjectMetadata;
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static apptive.pieceOfCake.store.exception.StoreExceptionType.NOT_FOUND_STORE;
@@ -25,17 +23,12 @@ import static apptive.pieceOfCake.store.exception.StoreExceptionType.NOT_FOUND_S
 public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, StoreRepository> implements StoreService {
 
     private final StoreRepository storeRepository;
-    private final AmazonS3Client amazonS3Client;
     private final ModelMapper modelMapper;
     private final S3Uploader s3Uploader;
 
-    @Value("${cloud.aws.s3.bucket}")
-    private static String bucketName;
-
-    public StoreServiceImpl(StoreRepository storeRepository, AmazonS3Client amazonS3Client, ModelMapper modelMapper, S3Uploader s3Uploader) {
+    public StoreServiceImpl(StoreRepository storeRepository, ModelMapper modelMapper, S3Uploader s3Uploader) {
         super(storeRepository);
         this.storeRepository = storeRepository;
-        this.amazonS3Client = amazonS3Client;
         this.modelMapper = modelMapper;
         this.s3Uploader = s3Uploader;
     }
@@ -66,7 +59,14 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
     @Override
     @Transactional(readOnly = true)
     public List<StoreResponse> findNearbyStores(double userLat, double userLon) {
-        return null;
+        List<Store> storeList = storeRepository.findStoresWithinRadius(userLat, userLon, 0.5);
+        List<StoreResponse> storeResponses = new ArrayList<>();
+
+        for (Store store : storeList) {
+            storeResponses.add(modelMapper.map(store, StoreResponse.class));
+        }
+
+        return storeResponses;
     }
 
     @Override
@@ -80,4 +80,5 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
     public StoreResponse updateImage(MultipartFile multipartFile) {
         return null;
     }
+
 }

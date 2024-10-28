@@ -3,6 +3,7 @@ package apptive.pieceOfCake.store.controller;
 import apptive.pieceOfCake.base.impl.BaseControllerImpl;
 import apptive.pieceOfCake.base.impl.BaseServiceImpl;
 import apptive.pieceOfCake.store.model.Store;
+import apptive.pieceOfCake.store.model.request.StoreFindByUserLonLat;
 import apptive.pieceOfCake.store.model.request.StoreRegistrationRequest;
 import apptive.pieceOfCake.store.model.response.StoreResponse;
 import apptive.pieceOfCake.store.repository.StoreRepository;
@@ -39,8 +40,10 @@ public class StoreControllerImpl extends BaseControllerImpl<Store, StoreResponse
     }
 
     @Override
-    public ResponseEntity<List<StoreResponse>> findNearbyStores() {
-        return null;
+    @GetMapping("/location")
+    public ResponseEntity<List<StoreResponse>> findNearbyStores(@RequestBody StoreFindByUserLonLat storeFindByUserLonLat) {
+        List<StoreResponse> nearbyStores = storeService.findNearbyStores(storeFindByUserLonLat.getLatitude(), storeFindByUserLonLat.getLongitude());
+        return ResponseEntity.ok(nearbyStores);
     }
 
     @Override
