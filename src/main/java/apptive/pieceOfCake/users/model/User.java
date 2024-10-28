@@ -10,14 +10,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.Where;
+import org.hibernate.annotations.SQLRestriction;
 
 @Getter
 @Setter
 @Entity
 @SuperBuilder
 @NoArgsConstructor
-@Where(clause = "is_deleted = 0")
+@SQLRestriction("is_deleted = 0")
 public class User extends BaseEntity {
 
     // 일반 로그인 시 사용
