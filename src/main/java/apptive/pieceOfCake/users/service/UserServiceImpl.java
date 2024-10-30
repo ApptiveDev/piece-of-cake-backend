@@ -3,6 +3,7 @@ package apptive.pieceOfCake.users.service;
 import apptive.pieceOfCake.base.impl.BaseServiceImpl;
 import apptive.pieceOfCake.users.exception.UserException;
 import apptive.pieceOfCake.users.model.User;
+import apptive.pieceOfCake.users.model.request.UserCheckSameEmail;
 import apptive.pieceOfCake.users.model.request.UserRequest;
 import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
 import apptive.pieceOfCake.users.model.response.UserMyPageResponse;
@@ -11,7 +12,7 @@ import apptive.pieceOfCake.users.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static apptive.pieceOfCake.users.exception.UserExceptionType.NOT_FOUND_MEMBER;
+import static apptive.pieceOfCake.users.exception.UserExceptionType.*;
 
 @Service
 public class UserServiceImpl extends BaseServiceImpl<User, UserResponse, UserRepository> implements UserService {
@@ -32,7 +33,9 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserResponse, UserRep
                 .loginPwd(userRequest.getLoginPwd())
                 .name(userRequest.getName())
                 .phoneNum(userRequest.getPhoneNum())
-                .email(userRequest.getEmail())
+                .address(userRequest.getAddress())
+                .latitude(userRequest.getLatitude())
+                .longitude(userRequest.getLongitude())
                 .build();
 
         userRepository.save(user);
@@ -48,9 +51,13 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserResponse, UserRep
                 .orElseThrow(() -> new UserException(NOT_FOUND_MEMBER));
 
         UserMyPageResponse userMyPageResponse = new UserMyPageResponse();
+        userMyPageResponse.setUserId(user.getId());
         userMyPageResponse.setName(user.getName());
         userMyPageResponse.setPhoneNum(user.getPhoneNum());
-        userMyPageResponse.setEmail(user.getEmail());
+        userMyPageResponse.setEmail(user.getLoginId());
+        userMyPageResponse.setAddress(user.getAddress());
+        userMyPageResponse.setLoginPwd(user.getLoginPwd());
+        userMyPageResponse.setPhoneNum(user.getPhoneNum());
 
         return userMyPageResponse;
     }
@@ -63,15 +70,29 @@ public class UserServiceImpl extends BaseServiceImpl<User, UserResponse, UserRep
                 .orElseThrow(() -> new UserException(NOT_FOUND_MEMBER));
 
         user.setPhoneNum(updateRequest.getPhoneNum());
-        user.setEmail(updateRequest.getEmail());
+        //user.setEmail(updateRequest.getEmail());
 
         userRepository.save(user);
 
         UserMyPageResponse userMyPageResponse = new UserMyPageResponse();
         userMyPageResponse.setName(user.getName());
         userMyPageResponse.setPhoneNum(user.getPhoneNum());
-        userMyPageResponse.setEmail(user.getEmail());
+        //userMyPageResponse.setEmail(user.getEmail());
 
         return userMyPageResponse;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public String checkSameEmail(UserCheckSameEmail userCheckSameEmail) {
+
+        User user = userRepository.findByLoginId(userCheckSameEmail.getLoginId())
+                .orElse(null);
+
+        if (user != null) {
+            throw new UserException(ALREADY_EXIST_USERNAME);
+        }
+
+        return "사용 가능한 아이디입니다.";
     }
 }

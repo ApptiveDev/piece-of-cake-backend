@@ -5,8 +5,10 @@ import org.springframework.http.HttpStatus;
 
 public enum UserExceptionType implements BaseExceptionType {
 
+    // 200 OK
+    ALREADY_EXIST_USERNAME(HttpStatus.OK, "이미 존재하는 아이디입니다."),
+
     // 400 Bad Request
-    ALREADY_EXIST_USERNAME(HttpStatus.BAD_REQUEST, "이미 존재하는 아이디입니다."),
     WRONG_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 잘못되었습니다."),
     NOT_SAME_PASSWORD(HttpStatus.BAD_REQUEST, "비밀번호가 같지 않습니다."),
 
