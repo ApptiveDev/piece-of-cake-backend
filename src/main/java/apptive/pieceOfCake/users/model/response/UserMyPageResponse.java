@@ -10,4 +10,6 @@ public class UserMyPageResponse {
     String name;
     String phoneNum;
     String email;
+    String address;
+    String loginPwd;
 }

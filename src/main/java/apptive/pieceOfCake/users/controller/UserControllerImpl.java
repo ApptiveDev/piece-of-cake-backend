@@ -3,6 +3,7 @@ package apptive.pieceOfCake.users.controller;
 import apptive.pieceOfCake.base.impl.BaseControllerImpl;
 import apptive.pieceOfCake.base.impl.BaseServiceImpl;
 import apptive.pieceOfCake.users.model.User;
+import apptive.pieceOfCake.users.model.request.UserCheckSameEmail;
 import apptive.pieceOfCake.users.model.request.UserRequest;
 import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
 import apptive.pieceOfCake.users.model.response.UserMyPageResponse;
@@ -48,6 +49,15 @@ public class UserControllerImpl extends BaseControllerImpl<User, UserResponse, U
 
         UserMyPageResponse userMyPageResponse = userService.update(userId, userUpdateRequest);
         return new ResponseEntity<>(userMyPageResponse, HttpStatus.OK);
+    }
+
+    @Override
+    @GetMapping("/checkEmail")
+    public ResponseEntity<String> checkSameEmail(UserCheckSameEmail userCheckSameEmail) {
+
+        String msg = userService.checkSameEmail(userCheckSameEmail);
+
+        return ResponseEntity.ok(msg);
     }
 }
 

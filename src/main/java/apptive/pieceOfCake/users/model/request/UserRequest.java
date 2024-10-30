@@ -17,5 +17,9 @@ public class UserRequest {
     @NotNull
     String phoneNum;
     @NotNull
-    String email;
+    String address;
+    @NotNull
+    double latitude;
+    @NotNull
+    double longitude;
 }
