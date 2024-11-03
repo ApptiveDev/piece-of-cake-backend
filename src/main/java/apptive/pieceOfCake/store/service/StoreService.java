@@ -13,7 +13,7 @@ import java.util.List;
 
 public interface StoreService extends BaseService<Store, StoreResponse, StoreRepository> {
 
-    StoreResponse save(Long storeId, StoreRegistrationRequest storeRegistrationRequest, MultipartFile multipartFile) throws IOException; // 가게 등록
+    StoreResponse save(Long storeId, StoreRegistrationRequest storeRegistrationRequest, MultipartFile profileImage, MultipartFile logoImage) throws IOException; // 가게 등록
     List<StoreResponse> findNearbyStores(double userLat, double userLon); // (위치 기반) 가게 찾기
     StoreResponse update(Long storeId, UserUpdateRequest updateRequest); // 정보 업데이트
     StoreResponse updateImage(MultipartFile multipartFile); // 가게 프로필 사진 업데이트

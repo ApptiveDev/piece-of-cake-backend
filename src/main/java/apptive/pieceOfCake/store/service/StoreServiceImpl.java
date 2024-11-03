@@ -35,21 +35,28 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
 
     @Override
     @Transactional
-    public StoreResponse save(Long storeId, StoreRegistrationRequest storeRegistrationRequest, MultipartFile multipartFile) throws IOException {
+    public StoreResponse save(Long storeId, StoreRegistrationRequest storeRegistrationRequest, MultipartFile profileImage, MultipartFile logoImage) throws IOException {
 
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(() -> new StoreException(NOT_FOUND_STORE));
 
         // 이미지 S3 저장 로직
-        String accessUrl = "";
+        String profileImageAccessUrl = "";
+        String logoImageAccessUrl = "";
 
-        if (!multipartFile.isEmpty()) {
-            accessUrl = s3Uploader.upload(multipartFile, store.getName());
+        // 가게 프로필 이미지
+        if (!profileImage.isEmpty()) {
+            profileImageAccessUrl = s3Uploader.upload(profileImage, store.getName());
+        }
+        // 가게 로고 이미지
+        if (!logoImage.isEmpty()) {
+            logoImageAccessUrl = s3Uploader.upload(logoImage, store.getName());
         }
 
         // 가게 저장 로직
         modelMapper.map(storeRegistrationRequest, store);
-        store.setImage(accessUrl);
+        store.setProfileImage(profileImageAccessUrl);
+        store.setLogoImage(logoImageAccessUrl);
 
         storeRepository.save(store);
 

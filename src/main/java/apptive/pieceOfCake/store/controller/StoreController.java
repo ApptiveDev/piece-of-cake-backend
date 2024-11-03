@@ -19,8 +19,9 @@ import java.util.List;
 public interface StoreController extends BaseController<Store, StoreResponse, StoreRepository> {
 
     ResponseEntity<StoreResponse> save(@PathVariable("storeId") Long storeId,
-                      @RequestPart(value = "store") StoreRegistrationRequest storeRegistrationRequest,
-                      @RequestPart(value = "image", required = false) MultipartFile multipartFile) throws IOException; // 가게 등록
+                                       @RequestPart(value = "store") StoreRegistrationRequest storeRegistrationRequest,
+                                       @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+                                       @RequestPart(value = "logoImage", required = false) MultipartFile logoImage) throws IOException; // 가게 등록
     ResponseEntity<List<StoreResponse>> findNearbyStores(@RequestBody StoreFindByUserLonLat storeFindByUserLonLat); // (위치 기반) 가게 찾기
     ResponseEntity<StoreResponse> update(Long storeId, UserUpdateRequest updateRequest); // 정보 업데이트
     ResponseEntity<StoreResponse> updateImage(MultipartFile multipartFile); // 가게 프로필 사진 업데이트
