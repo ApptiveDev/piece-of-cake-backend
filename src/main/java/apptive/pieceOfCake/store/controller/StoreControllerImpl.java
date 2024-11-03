@@ -32,9 +32,10 @@ public class StoreControllerImpl extends BaseControllerImpl<Store, StoreResponse
     @PatchMapping("/save/{storeId}")
     public ResponseEntity<StoreResponse> save(@PathVariable("storeId") Long storeId,
                                               @RequestPart(value = "store") StoreRegistrationRequest storeRegistrationRequest,
-                                              @RequestPart(value = "image") MultipartFile multipartFile) throws IOException {
+                                              @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
+                                              @RequestPart(value = "logoImage", required = false) MultipartFile logoImage) throws IOException {
 
-        StoreResponse storeResponse = storeService.save(storeId, storeRegistrationRequest, multipartFile);
+        StoreResponse storeResponse = storeService.save(storeId, storeRegistrationRequest, profileImage, logoImage);
 
         return new ResponseEntity<>(storeResponse, HttpStatus.OK);
     }

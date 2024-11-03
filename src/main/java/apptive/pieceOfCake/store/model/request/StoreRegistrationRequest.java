@@ -13,6 +13,5 @@ public class StoreRegistrationRequest {
     private String contact; // 가게 연락처
     private String phoneNum; // 대표 연락
     private String sLink; // SNS 링크
-    private String description; // 기타 설명
-    private String introduction; // 프로필 설명
+    private String profileIntroduction; // 프로필 설명
 }
