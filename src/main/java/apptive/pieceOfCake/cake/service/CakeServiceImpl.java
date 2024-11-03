@@ -2,13 +2,13 @@ package apptive.pieceOfCake.cake.service;
 
 import apptive.pieceOfCake.cake.exception.CakeException;
 import apptive.pieceOfCake.cake.model.Cake;
-import apptive.pieceOfCake.cake.model.option.SizeOption;
+import apptive.pieceOfCake.cake.model.option.*;
 import apptive.pieceOfCake.cake.model.request.CakeRequest;
 import apptive.pieceOfCake.cake.model.request.option.*;
 import apptive.pieceOfCake.cake.model.response.CakeResponse;
 import apptive.pieceOfCake.cake.model.response.option.*;
 import apptive.pieceOfCake.cake.repository.CakeRepository;
-import apptive.pieceOfCake.cake.repository.option.SizeOptionRepository;
+import apptive.pieceOfCake.cake.repository.option.*;
 import apptive.pieceOfCake.store.exception.StoreException;
 import apptive.pieceOfCake.store.model.Store;
 import apptive.pieceOfCake.store.repository.StoreRepository;
@@ -22,11 +22,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import static apptive.pieceOfCake.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
-import static apptive.pieceOfCake.cake.exception.CakeExceptionType.WRONG_INPUT;
 import static apptive.pieceOfCake.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
@@ -38,6 +36,10 @@ public class CakeServiceImpl implements CakeService{
 
     // option repository
     private final SizeOptionRepository sizeOptionRepository;
+    private final TasteOptionRepository tasteOptionRepository;
+    private final CreamOptionRepository creamOptionRepository;
+    private final ColorOptionRepository colorOptionRepository;
+    private final EtcOptionRepository etcOptionRepository;
 
     private final ModelMapper modelMapper;
     private final S3Uploader s3Uploader;
@@ -91,23 +93,89 @@ public class CakeServiceImpl implements CakeService{
     }
 
     @Override
-    public CakeResponse addTasteOption(TasteOptionRequest tasteOptionRequest) {
-        return null;
+    @Transactional
+    public CakeResponse addTasteOption(Long cakeId, TasteOptionRequest tasteOptionRequest) {
+        Cake cake = cakeRepository.findById(cakeId)
+                .orElseThrow(() -> new CakeException(NOT_FOUND_CAKE));
+
+        TasteOption tasteOption = new TasteOption();
+        tasteOption.setCake(cake);
+        tasteOption.setType(tasteOptionRequest.getType());
+        tasteOption.setAdditionalPrice(tasteOptionRequest.getAdditionalPrice());
+
+        tasteOptionRepository.save(tasteOption);
+
+        List<TasteOption> tasteOptions = cake.getTasteOptions();
+        tasteOptions.add(tasteOption);
+
+        return createCakeResponse(cake);
     }
 
     @Override
-    public CakeResponse addCreamOption(CreamOptionRequest creamOptionRequest) {
-        return null;
+    @Transactional
+    public CakeResponse addCreamOption(Long cakeId, CreamOptionRequest creamOptionRequest) {
+        Cake cake = cakeRepository.findById(cakeId)
+                .orElseThrow(() -> new CakeException(NOT_FOUND_CAKE));
+
+        CreamOption creamOption = new CreamOption();
+        creamOption.setCake(cake);
+        creamOption.setType(creamOptionRequest.getType());
+        creamOption.setAdditionalPrice(creamOptionRequest.getAdditionalPrice());
+
+        creamOptionRepository.save(creamOption);
+
+        List<CreamOption> creamOptions = cake.getCreamOptions();
+        creamOptions.add(creamOption);
+
+        return createCakeResponse(cake);
     }
 
     @Override
-    public CakeResponse addColorOption(ColorOptionRequest colorOptionRequest) {
-        return null;
+    @Transactional
+    public CakeResponse addColorOption(Long cakeId, ColorOptionRequest colorOptionRequest, MultipartFile colorImage) throws IOException {
+        Cake cake = cakeRepository.findById(cakeId)
+                .orElseThrow(() -> new CakeException(NOT_FOUND_CAKE));
+
+        ColorOption colorOption = new ColorOption();
+        colorOption.setCake(cake);
+        colorOption.setType(colorOptionRequest.getType());
+        colorOption.setAdditionalPrice(colorOptionRequest.getAdditionalPrice());
+
+        // 이미지 S3 저장 로직
+        String colorImageAccessUrl = "";
+
+        // 가게 프로필 이미지
+        if (!colorImage.isEmpty()) {
+            colorImageAccessUrl = s3Uploader.upload(colorImage, cake.getName());
+        }
+
+        colorOption.setColorImage(colorImageAccessUrl);
+
+        colorOptionRepository.save(colorOption);
+
+        List<ColorOption> colorOptions = cake.getColorOptions();
+        colorOptions.add(colorOption);
+
+        return createCakeResponse(cake);
     }
 
     @Override
-    public CakeResponse addEtcOption(EtcOptionRequest etcOptionRequest) {
-        return null;
+    @Transactional
+    public CakeResponse addEtcOption(Long cakeId, EtcOptionRequest etcOptionRequest) {
+        Cake cake = cakeRepository.findById(cakeId)
+                .orElseThrow(() -> new CakeException(NOT_FOUND_CAKE));
+
+        EtcOption etcOption = new EtcOption();
+        etcOption.setCake(cake);
+        etcOption.setType(etcOptionRequest.getType());
+        etcOption.setAdditionalPrice(etcOptionRequest.getAdditionalPrice());
+
+        etcOptionRepository.save(etcOption);
+
+        List<EtcOption> etcOptions = cake.getEtcOptions();
+        etcOptions.add(etcOption);
+
+        return createCakeResponse(cake);
     }
 
     @Override

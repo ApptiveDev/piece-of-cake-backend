@@ -1,7 +1,7 @@
 package apptive.pieceOfCake.cake.controller;
 
 import apptive.pieceOfCake.cake.model.request.CakeRequest;
-import apptive.pieceOfCake.cake.model.request.option.SizeOptionRequest;
+import apptive.pieceOfCake.cake.model.request.option.*;
 import apptive.pieceOfCake.cake.model.response.CakeResponse;
 import apptive.pieceOfCake.cake.service.CakeService;
 import lombok.RequiredArgsConstructor;
@@ -36,6 +36,43 @@ public class CakeControllerImpl implements CakeController{
                                                       @RequestBody SizeOptionRequest sizeOptionRequest) {
 
         CakeResponse cakeResponse = cakeService.addSizeOption(cakeId, sizeOptionRequest);
+        return ResponseEntity.ok(cakeResponse);
+    }
+
+    @Override
+    @PatchMapping("/{cakeId}/taste")
+    public ResponseEntity<CakeResponse> addTasteOption(@PathVariable("cakeId") Long cakeId,
+                                                       @RequestBody TasteOptionRequest tasteOptionRequest) {
+
+        CakeResponse cakeResponse = cakeService.addTasteOption(cakeId, tasteOptionRequest);
+        return ResponseEntity.ok(cakeResponse);
+    }
+
+    @Override
+    @PatchMapping("/{cakeId}/cream")
+    public ResponseEntity<CakeResponse> addCreamOption(@PathVariable("cakeId") Long cakeId,
+                                                       @RequestBody CreamOptionRequest creamOptionRequest) {
+
+        CakeResponse cakeResponse = cakeService.addCreamOption(cakeId, creamOptionRequest);
+        return ResponseEntity.ok(cakeResponse);
+    }
+
+    @Override
+    @PatchMapping("/{cakeId}/color")
+    public ResponseEntity<CakeResponse> addColorOption(@PathVariable("cakeId") Long cakeId,
+                                                       @RequestPart("colorOption") ColorOptionRequest colorOptionRequest,
+                                                       @RequestPart("image") MultipartFile colorImage) throws IOException {
+
+        CakeResponse cakeResponse = cakeService.addColorOption(cakeId, colorOptionRequest, colorImage);
+        return ResponseEntity.ok(cakeResponse);
+    }
+
+    @Override
+    @PatchMapping("/{cakeId}/etc")
+    public ResponseEntity<CakeResponse> addEtcOption(@PathVariable("cakeId") Long cakeId,
+                                                     @RequestBody EtcOptionRequest etcOptionRequest) {
+
+        CakeResponse cakeResponse = cakeService.addEtcOption(cakeId, etcOptionRequest);
         return ResponseEntity.ok(cakeResponse);
     }
 

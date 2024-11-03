@@ -1,7 +1,7 @@
 package apptive.pieceOfCake.cake.controller;
 
 import apptive.pieceOfCake.cake.model.request.CakeRequest;
-import apptive.pieceOfCake.cake.model.request.option.SizeOptionRequest;
+import apptive.pieceOfCake.cake.model.request.option.*;
 import apptive.pieceOfCake.cake.model.response.CakeResponse;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +19,16 @@ public interface CakeController {
 
     ResponseEntity<CakeResponse> addSizeOption(@PathVariable("cakeId") Long cakeId,
                                                @RequestBody SizeOptionRequest sizeOptionRequest); // 케이크 크기 옵션 추가
+
+    ResponseEntity<CakeResponse> addTasteOption(@PathVariable("cakeId") Long cakeId,
+                                                @RequestBody TasteOptionRequest tasteOptionRequest);// 케이크 맛 옵션 추가
+    ResponseEntity<CakeResponse> addCreamOption(@PathVariable("cakeId") Long cakeId,
+                                                @RequestBody CreamOptionRequest creamOptionRequest);// 케이크 크림 옵션 추가
+    ResponseEntity<CakeResponse> addColorOption(@PathVariable("cakeId") Long cakeId,
+                                                @RequestPart("colorOption") ColorOptionRequest colorOptionRequest,
+                                                @RequestPart("image") MultipartFile colorImage) throws IOException;// 케이크 색상 옵션 추가
+    ResponseEntity<CakeResponse> addEtcOption(@PathVariable("cakeId") Long cakeId,
+                                              @RequestBody EtcOptionRequest etcOptionRequest);// 케이크 기타 옵션 추가
 
     ResponseEntity<List<CakeResponse>> findAll(@PathVariable("storeId") Long storeId); // 케이크 전체보기
     ResponseEntity<CakeResponse> cakeDetail(@PathVariable("storeId") Long storeId,
