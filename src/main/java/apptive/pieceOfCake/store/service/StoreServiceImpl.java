@@ -6,7 +6,7 @@ import apptive.pieceOfCake.store.model.Store;
 import apptive.pieceOfCake.store.model.request.StoreRegistrationRequest;
 import apptive.pieceOfCake.store.model.response.StoreResponse;
 import apptive.pieceOfCake.store.repository.StoreRepository;
-import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
+import apptive.pieceOfCake.users.model.request.MemberUpdateRequest;
 import apptive.pieceOfCake.util.S3Uploader;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -84,7 +84,7 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
 
     @Override
     @Transactional
-    public StoreResponse update(Long storeId, UserUpdateRequest updateRequest) {
+    public StoreResponse update(Long storeId, MemberUpdateRequest updateRequest) {
         return null;
     }
 

@@ -2,7 +2,6 @@ package apptive.pieceOfCake.users.model;
 
 import apptive.pieceOfCake.auth.Role;
 import apptive.pieceOfCake.base.BaseEntity;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,7 +17,7 @@ import org.hibernate.annotations.SQLRestriction;
 @SuperBuilder
 @NoArgsConstructor
 @SQLRestriction("is_deleted = 0")
-public class User extends BaseEntity {
+public class Member extends BaseEntity {
 
     // 일반 로그인 시 사용
     private String loginId; // 로그인 아이디 (이메일)

@@ -3,7 +3,7 @@ package apptive.pieceOfCake.users.exception;
 import apptive.pieceOfCake.base.exception.BaseExceptionType;
 import org.springframework.http.HttpStatus;
 
-public enum UserExceptionType implements BaseExceptionType {
+public enum MemberExceptionType implements BaseExceptionType {
 
     // 200 OK
     ALREADY_EXIST_USERNAME(HttpStatus.OK, "이미 존재하는 아이디입니다."),
@@ -21,7 +21,7 @@ public enum UserExceptionType implements BaseExceptionType {
     private final HttpStatus httpStatus;
     private final String errorMessage;
 
-    UserExceptionType(HttpStatus httpStatus, String errorMessage) {
+    MemberExceptionType(HttpStatus httpStatus, String errorMessage) {
         this.httpStatus = httpStatus;
         this.errorMessage = errorMessage;
     }
