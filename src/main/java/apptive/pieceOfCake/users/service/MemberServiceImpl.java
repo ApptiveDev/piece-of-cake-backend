@@ -29,13 +29,14 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
     public Long save(MemberRequest memberRequest) {
 
         Member user = Member.builder()
-                .loginId(memberRequest.getLoginId())
+                .email(memberRequest.getEmail())
                 .loginPwd(memberRequest.getLoginPwd())
                 .name(memberRequest.getName())
                 .phoneNum(memberRequest.getPhoneNum())
                 .address(memberRequest.getAddress())
                 .latitude(memberRequest.getLatitude())
                 .longitude(memberRequest.getLongitude())
+                .agreementOfMarketing(false)
                 .build();
 
         memberRepository.save(user);
@@ -47,46 +48,36 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
     @Transactional(readOnly = true)
     public MemberMyPageResponse find(Long userID) {
 
-        Member user = memberRepository.findById(userID)
+        Member member = memberRepository.findById(userID)
                 .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
 
-        MemberMyPageResponse memberMyPageResponse = new MemberMyPageResponse();
-        memberMyPageResponse.setUserId(user.getId());
-        memberMyPageResponse.setName(user.getName());
-        memberMyPageResponse.setPhoneNum(user.getPhoneNum());
-        memberMyPageResponse.setEmail(user.getLoginId());
-        memberMyPageResponse.setAddress(user.getAddress());
-        memberMyPageResponse.setLoginPwd(user.getLoginPwd());
-        memberMyPageResponse.setPhoneNum(user.getPhoneNum());
-
-        return memberMyPageResponse;
+        return getMemberMyPageResponse(member);
     }
 
     @Override
     @Transactional
     public MemberMyPageResponse update(Long userID, MemberUpdateRequest updateRequest) {
 
-        Member user = memberRepository.findById(userID)
+        Member member = memberRepository.findById(userID)
                 .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
 
-        user.setPhoneNum(updateRequest.getPhoneNum());
-        //user.setEmail(updateRequest.getEmail());
+        member.setEmail(updateRequest.getEmail());
+        member.setName(updateRequest.getName());
+        member.setPhoneNum(updateRequest.getPhoneNum());
+        member.setAddress(updateRequest.getAddress());
+        member.setLoginPwd(updateRequest.getLoginPwd());
+        member.setAgreementOfMarketing(updateRequest.isAgreementOfMarketing());
 
-        memberRepository.save(user);
+        memberRepository.save(member);
 
-        MemberMyPageResponse memberMyPageResponse = new MemberMyPageResponse();
-        memberMyPageResponse.setName(user.getName());
-        memberMyPageResponse.setPhoneNum(user.getPhoneNum());
-        //memberMyPageResponse.setEmail(user.getEmail());
-
-        return memberMyPageResponse;
+        return getMemberMyPageResponse(member);
     }
 
     @Override
     @Transactional(readOnly = true)
     public String checkSameEmail(MemberCheckSameEmail memberCheckSameEmail) {
 
-        Member user = memberRepository.findByLoginId(memberCheckSameEmail.getLoginId())
+        Member user = memberRepository.findByEmail(memberCheckSameEmail.getLoginId())
                 .orElse(null);
 
         if (user != null) {
@@ -94,5 +85,19 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
         }
 
         return "사용 가능한 아이디입니다.";
+    }
+
+    // ------------ inner method --------------
+    private MemberMyPageResponse getMemberMyPageResponse(Member member) {
+        MemberMyPageResponse memberMyPageResponse = new MemberMyPageResponse();
+        memberMyPageResponse.setUserId(member.getId());
+        memberMyPageResponse.setEmail(member.getEmail());
+        memberMyPageResponse.setName(member.getName());
+        memberMyPageResponse.setPhoneNum(member.getPhoneNum());
+        memberMyPageResponse.setAddress(member.getAddress());
+        memberMyPageResponse.setLoginPwd(member.getLoginPwd());
+        memberMyPageResponse.setAgreementOfMarketing(member.isAgreementOfMarketing());
+
+        return memberMyPageResponse;
     }
 }

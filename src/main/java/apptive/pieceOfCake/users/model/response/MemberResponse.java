@@ -6,6 +6,6 @@ import lombok.Setter;
 @Getter @Setter
 public class MemberResponse {
 
-    Long userId;
+    Long id;
     String name;
 }

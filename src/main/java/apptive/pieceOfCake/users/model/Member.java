@@ -20,12 +20,12 @@ import org.hibernate.annotations.SQLRestriction;
 public class Member extends BaseEntity {
 
     // 일반 로그인 시 사용
-    private String loginId; // 로그인 아이디 (이메일)
+    private String email; // 로그인 아이디 (이메일)
     private String loginPwd; // 로그인 비밀번호
 
     // 소셜 로그인 시 사용
-    private String provider; // kakao, naver
-    private String providerId; // 해당 OAuth 의 key(id)
+    //private String provider; // kakao, naver
+    //private String providerId; // 해당 OAuth 의 key(id)
 
     private String name; // 이름
     private String phoneNum; // 전화번호
@@ -33,6 +33,8 @@ public class Member extends BaseEntity {
 
     private double latitude; // 위도
     private double longitude; // 경도
+
+    private boolean agreementOfMarketing; // 마케팅 수신 동의 여부
 
     @Enumerated(EnumType.STRING)
     private Role role; //ADMIN, STORE, USER

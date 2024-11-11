@@ -8,7 +8,7 @@ import lombok.Setter;
 public class MemberRequest {
 
     @NotNull
-    String loginId;
+    String email;
     @NotNull
     String loginPwd;
 

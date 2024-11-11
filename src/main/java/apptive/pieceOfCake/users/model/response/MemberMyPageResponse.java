@@ -6,10 +6,11 @@ import lombok.Setter;
 @Getter @Setter
 public class MemberMyPageResponse {
 
-    Long userId;
-    String name;
-    String phoneNum;
-    String email;
-    String address;
-    String loginPwd;
+    private Long userId;
+    private String name;
+    private String phoneNum;
+    private String email;
+    private String address;
+    private String loginPwd;
+    private boolean agreementOfMarketing;
 }
