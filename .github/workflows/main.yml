@@ -1,0 +1,41 @@
+name: Build and Merge PR
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+
+      - name: Build with Gradle
+        run: ./gradlew build # Gradle 빌드 실행
+
+      - name: Run tests
+        run: ./gradlew test # 테스트 실행
+
+  merge:
+    runs-on: ubuntu-latest
+    needs: build
+    if: success() # 빌드가 성공했을 때만 실행
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Merge PR
+        uses: "peter-evans/merge-pull-request@v3"
+        with:
+          pull-request-number: ${{ github.event.pull_request.number }}
+          merge-method: merge # merge 방법을 선택 (merge, squash, rebase 중 선택 가능)
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
