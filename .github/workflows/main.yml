@@ -15,7 +15,16 @@ jobs:
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
-          java-version: '17'
+          java-version: '17' # 원하는 JDK 버전으로 변경
+          distribution: 'openjdk' # 사용할 JDK 배포판 (adopt, zulu, temurin 등)
+          java-package: jdk
+          architecture: x64
+          check-latest: false
+          server-id: github
+          server-username: GITHUB_ACTOR
+          server-password: GITHUB_TOKEN
+          overwrite-settings: true
+          job-status: success
 
       - name: Build with Gradle
         run: ./gradlew build # Gradle 빌드 실행
