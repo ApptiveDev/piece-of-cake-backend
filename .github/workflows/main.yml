@@ -34,9 +34,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Merge PR
-        uses: "peter-evans/merge-pull-request@v3"
-        with:
-          pull-request-number: ${{ github.event.pull_request.number }}
-          merge-method: merge # merge 방법을 선택 (merge, squash, rebase 중 선택 가능)
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          git checkout main
+          git merge dev --no-ff --no-edit
+          git push origin main
