@@ -3,11 +3,11 @@ package apptive.pieceOfCake.users.exception;
 import apptive.pieceOfCake.base.exception.BaseException;
 import apptive.pieceOfCake.base.exception.BaseExceptionType;
 
-public class UserException extends BaseException {
+public class MemberException extends BaseException {
 
     private BaseExceptionType exType;
 
-    public UserException(BaseExceptionType exType) {
+    public MemberException(BaseExceptionType exType) {
         this.exType = exType;
     }
 

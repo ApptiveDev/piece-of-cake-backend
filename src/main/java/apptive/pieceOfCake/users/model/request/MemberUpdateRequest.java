@@ -4,7 +4,9 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UserCheckSameEmail {
+public class MemberUpdateRequest {
 
     String loginId;
+    String name;
+    String phoneNum;
 }

@@ -4,7 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class UserResponse {
+public class MemberResponse {
 
     Long userId;
     String name;

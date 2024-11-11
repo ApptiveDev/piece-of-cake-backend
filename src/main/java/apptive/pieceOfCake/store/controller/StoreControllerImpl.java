@@ -8,7 +8,7 @@ import apptive.pieceOfCake.store.model.request.StoreRegistrationRequest;
 import apptive.pieceOfCake.store.model.response.StoreResponse;
 import apptive.pieceOfCake.store.repository.StoreRepository;
 import apptive.pieceOfCake.store.service.StoreService;
-import apptive.pieceOfCake.users.model.request.UserUpdateRequest;
+import apptive.pieceOfCake.users.model.request.MemberUpdateRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -48,7 +48,7 @@ public class StoreControllerImpl extends BaseControllerImpl<Store, StoreResponse
     }
 
     @Override
-    public ResponseEntity<StoreResponse> update(Long storeId, UserUpdateRequest updateRequest) {
+    public ResponseEntity<StoreResponse> update(Long storeId, MemberUpdateRequest updateRequest) {
         return null;
     }
 
