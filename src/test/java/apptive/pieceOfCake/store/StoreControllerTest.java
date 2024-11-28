@@ -21,11 +21,16 @@ import org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.epages.restdocs.apispec.MockMvcRestDocumentationWrapper.document;
+import static com.epages.restdocs.apispec.ResourceDocumentation.parameterWithName;
 import static com.epages.restdocs.apispec.ResourceDocumentation.resource;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.http.MediaType.*;
+import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.get;
 import static org.springframework.restdocs.mockmvc.RestDocumentationRequestBuilders.multipart;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.JsonFieldType.NUMBER;
@@ -146,5 +151,61 @@ public class StoreControllerTest extends ControllerTestConfig {
                                 .requestSchema(Schema.schema("StoreRegistrationRequest"))
                                 .responseSchema(Schema.schema("StoreResponse"))
                                 .build())));
+    }
+
+    @DisplayName("가게 찾기 API (성공)")
+    @Test
+    void findStore_success() throws Exception {
+        // given
+        StoreResponse storeResponse1 = new StoreResponse();
+        storeResponse1.setStoreId(1L);
+        storeResponse1.setName("앱티브 케익 가게");
+        storeResponse1.setProfileImage("https://pieceofcake-bucket.s3.ap-northeast-2.amazonaws.com/images/~~");
+        storeResponse1.setLogoImage("https://pieceofcake-bucket.s3.ap-northeast-2.amazonaws.com/images/~~");
+        storeResponse1.setDistance(0.5);
+
+        StoreResponse storeResponse2 = new StoreResponse();
+        storeResponse2.setStoreId(2L);
+        storeResponse2.setName("파파라치 케익 가게");
+        storeResponse2.setProfileImage("https://pieceofcake-bucket.s3.ap-northeast-2.amazonaws.com/images/~~");
+        storeResponse2.setLogoImage("https://pieceofcake-bucket.s3.ap-northeast-2.amazonaws.com/images/~~");
+        storeResponse2.setDistance(0.8);
+
+        List<StoreResponse> storeResponseList = new ArrayList<>();
+        storeResponseList.add(storeResponse1);
+        storeResponseList.add(storeResponse2);
+
+        // when
+        when(storeService.findNearbyStores(any(Double.class), any(Double.class))).thenReturn(storeResponseList);
+
+        // then
+        mockMvc.perform(
+                        get(DEFAULT_URL + "/location")
+                                .param("latitude", "12.45")
+                                .param("longitude", "184.12")
+                )
+                //.andDo(print())
+                .andExpect(status().isOk())
+                .andDo(
+                        document("findStore",
+                                preprocessRequest(prettyPrint()),
+                                preprocessResponse(prettyPrint()),
+                                resource(ResourceSnippetParameters.builder()
+                                        .tag("Store API")
+                                        .summary("가게 찾기 API")
+                                        .description("현재 위치를 기반으로 근처에 위치한 가게를 찾을 수 있습니다.")
+                                        .queryParameters(
+                                                parameterWithName("latitude").description("현재 위치의 위도"),
+                                                parameterWithName("longitude").description("현재 위치의 경도")
+                                        )
+                                        .responseFields(
+                                                fieldWithPath("[].storeId").type(NUMBER).description("가게 unique ID (Long)"),
+                                                fieldWithPath("[].name").type(STRING).description("가게명"),
+                                                fieldWithPath("[].profileImage").type(STRING).description("가게 프로필 이미지"),
+                                                fieldWithPath("[].logoImage").type(STRING).description("가게 로 이미지"),
+                                                fieldWithPath("[].distance").type(NUMBER).description("현재 위치에서의 거리")
+                                        )
+                                        .responseSchema(Schema.schema("StoreResponse"))
+                                        .build())));
     }
 }

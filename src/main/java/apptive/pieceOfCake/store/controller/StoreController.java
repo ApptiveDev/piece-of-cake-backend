@@ -10,6 +10,7 @@ import apptive.pieceOfCake.users.model.request.MemberUpdateRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,7 +23,8 @@ public interface StoreController extends BaseController<Store, StoreResponse, St
                                        @RequestPart(value = "store") StoreRegistrationRequest storeRegistrationRequest,
                                        @RequestPart(value = "profileImage", required = false) MultipartFile profileImage,
                                        @RequestPart(value = "logoImage", required = false) MultipartFile logoImage) throws IOException; // 가게 등록
-    ResponseEntity<List<StoreResponse>> findNearbyStores(@RequestBody StoreFindByUserLonLat storeFindByUserLonLat); // (위치 기반) 가게 찾기
+    ResponseEntity<List<StoreResponse>> findNearbyStores(@RequestParam double latitude,
+                                                         @RequestParam double longitude); // (위치 기반) 가게 찾기
     ResponseEntity<StoreResponse> update(Long storeId, MemberUpdateRequest updateRequest); // 정보 업데이트
     ResponseEntity<StoreResponse> updateImage(MultipartFile multipartFile); // 가게 프로필 사진 업데이트
 
