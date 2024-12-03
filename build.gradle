@@ -15,7 +15,7 @@ plugins {
 }
 
 group = 'apptive'
-version = '0.0.2-SNAPSHOT'
+version = '0.0.3-SNAPSHOT'
 
 java {
 	toolchain {
@@ -44,11 +44,11 @@ swaggerSources {
 openapi3 {
 	servers = [
 			{ url = 'http://localhost:8080' },
-			{ url = 'http://54.180.146.87:8080' }
+			{ url = 'http://43.201.0.113:8080' }
 	]
 	title = 'Piece of Cake Service API'
 	description = 'Piece of Cake Service API description'
-	version = '0.0.2'
+	version = '0.0.3'
 	format = 'json'
 }
 
