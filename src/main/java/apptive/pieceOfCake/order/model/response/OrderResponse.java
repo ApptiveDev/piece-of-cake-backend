@@ -9,6 +9,8 @@ import java.util.List;
 @Getter @Setter
 public class OrderResponse {
 
+    private Long orderId; // 주문 ID
+
     private String storeName; // 가게 이름
 
     private String cakeName; // 케이크 이름

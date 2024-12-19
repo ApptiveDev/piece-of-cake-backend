@@ -93,6 +93,7 @@ public class OrderServiceImpl implements OrderService{
                     .orElseThrow(() -> new StoreException(NOT_FOUND_STORE));
 
             OrderResponse orderResponse = new OrderResponse();
+            orderResponse.setOrderId(orderInfo.getId());
             orderResponse.setStoreName(store.getName()); // 가게 이름 설정
             orderResponse.setCakeName(cake.getName()); // 케이크 이름 설정
             orderResponse.setCakeImage(cake.getCakeImage()); // 케이크 이미지 설정
