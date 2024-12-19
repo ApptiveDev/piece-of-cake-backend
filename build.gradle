@@ -77,7 +77,7 @@ dependencies {
 	// SwaggerUI 추가
 	swaggerUI 'org.webjars:swagger-ui:4.11.1'
 
-	compileOnly 'org.projectlombok:lombok:1.18.10'
+	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
