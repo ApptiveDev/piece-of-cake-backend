@@ -1,6 +1,6 @@
 package apptive.pieceOfCake.store.model;
 
-import apptive.pieceOfCake.auth.Role;
+import apptive.pieceOfCake.auth.RoleName;
 import apptive.pieceOfCake.base.BaseEntity;
 import jakarta.persistence.Entity;
 import lombok.Getter;
@@ -37,5 +37,5 @@ public class Store extends BaseEntity {
     private String logoImage; // 로고 이미지
     private String profileIntroduction; // 프로필 설명
 
-    private Role role;
+    private RoleName roleName;
 }

@@ -1,5 +1,6 @@
 package apptive.pieceOfCake.users;
 
+import apptive.pieceOfCake.auth.RoleName;
 import apptive.pieceOfCake.base.impl.BaseServiceImpl;
 import apptive.pieceOfCake.config.ControllerTestConfig;
 import apptive.pieceOfCake.users.exception.MemberException;
@@ -101,16 +102,19 @@ public class MemberControllerTest extends ControllerTestConfig {
     void findMember_success() throws Exception {
         // given
         Long userId = 1L;
-        MemberMyPageResponse member = new MemberMyPageResponse();
-        member.setUserId(userId);
+        Member member = new Member();
+        member.setId(userId);
         member.setName("홍길동");
         member.setEmail("apptive1234@naver.com");
         member.setLoginPwd("pwd1234");
         member.setAddress("부산시 금정구 부산대학로63번길 2");
         member.setPhoneNum("010-1234-5678");
         member.setAgreementOfMarketing(true);
+        member.setRoleName(RoleName.ROLE_USER);
 
-        when(memberService.find(userId)).thenReturn(member);
+        MemberMyPageResponse memberMyPageResponse = MemberMyPageResponse.of(member);
+
+        when(memberService.find(userId)).thenReturn(memberMyPageResponse);
 
         // when // then
         mockMvc.perform(
@@ -191,14 +195,17 @@ public class MemberControllerTest extends ControllerTestConfig {
 
         String jsonRq = objectMapper.writeValueAsString(memberUpdateRequest);
 
-        MemberMyPageResponse memberMyPageResponse = new MemberMyPageResponse();
-        memberMyPageResponse.setUserId(userId);
-        memberMyPageResponse.setName("홍길동");
-        memberMyPageResponse.setEmail("apptive1234@naver.com");
-        memberMyPageResponse.setLoginPwd("pwd1234");
-        memberMyPageResponse.setAddress("부산시 금정구 부산대학로63번길 2");
-        memberMyPageResponse.setPhoneNum("010-1234-5678");
-        memberMyPageResponse.setAgreementOfMarketing(true);
+        Member member = new Member();
+        member.setId(userId);
+        member.setName("홍길동");
+        member.setEmail("apptive1234@naver.com");
+        member.setLoginPwd("pwd1234");
+        member.setAddress("부산시 금정구 부산대학로63번길 2");
+        member.setPhoneNum("010-1234-5678");
+        member.setAgreementOfMarketing(true);
+        member.setRoleName(RoleName.ROLE_USER);
+
+        MemberMyPageResponse memberMyPageResponse = MemberMyPageResponse.of(member);
 
         //when
         when(memberService.update(any(Long.class), any(MemberUpdateRequest.class))).thenReturn(memberMyPageResponse);

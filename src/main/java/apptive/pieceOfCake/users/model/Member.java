@@ -1,6 +1,6 @@
 package apptive.pieceOfCake.users.model;
 
-import apptive.pieceOfCake.auth.Role;
+import apptive.pieceOfCake.auth.RoleName;
 import apptive.pieceOfCake.base.BaseEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -37,5 +37,5 @@ public class Member extends BaseEntity {
     private boolean agreementOfMarketing; // 마케팅 수신 동의 여부
 
     @Enumerated(EnumType.STRING)
-    private Role role; //ADMIN, STORE, USER
+    private RoleName roleName; //ADMIN, STORE, USER
 }

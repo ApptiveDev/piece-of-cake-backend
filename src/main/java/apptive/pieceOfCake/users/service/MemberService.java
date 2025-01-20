@@ -15,6 +15,7 @@ public interface MemberService extends BaseService<Member, MemberResponse, Membe
 
     Long save(MemberRequest memberRequest); // 회원가입
     MemberMyPageResponse find(Long userID); // 유저 찾기
+    MemberMyPageResponse findByEmail(String email); // 유저 찾기 (로그인 용)
     MemberMyPageResponse update(Long userID, MemberUpdateRequest updateRequest); // 정보 업데이트
     String checkSameEmail(MemberCheckSameEmail memberCheckSameEmail);
 }

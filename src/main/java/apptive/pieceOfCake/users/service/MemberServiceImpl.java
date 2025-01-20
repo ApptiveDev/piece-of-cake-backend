@@ -9,6 +9,7 @@ import apptive.pieceOfCake.users.model.request.MemberUpdateRequest;
 import apptive.pieceOfCake.users.model.response.MemberMyPageResponse;
 import apptive.pieceOfCake.users.model.response.MemberResponse;
 import apptive.pieceOfCake.users.repository.MemberRepository;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,34 +25,32 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
         this.memberRepository = memberRepository;
     }
 
+    // 사용 X
     @Override
-    @Transactional
     public Long save(MemberRequest memberRequest) {
+        return null;
+    }
 
-        Member user = Member.builder()
-                .email(memberRequest.getEmail())
-                .loginPwd(memberRequest.getLoginPwd())
-                .name(memberRequest.getName())
-                .phoneNum(memberRequest.getPhoneNum())
-                .address(memberRequest.getAddress())
-                .latitude(memberRequest.getLatitude())
-                .longitude(memberRequest.getLongitude())
-                .agreementOfMarketing(memberRequest.isAgreementOfMarketing())
-                .build();
+    /**
+     * 사용자 idx 를 이용해 사용자 정보 조회
+     *
+     * @param userId 사용자 idx
+     * @return 사용자 정보 MemberMyPageResponse
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public MemberMyPageResponse find(Long userId) {
 
-        memberRepository.save(user);
-
-        return user.getId();
+        return memberRepository.findById(userId)
+                .map(MemberMyPageResponse::of)
+                .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
     }
 
     @Override
-    @Transactional(readOnly = true)
-    public MemberMyPageResponse find(Long userID) {
-
-        Member member = memberRepository.findById(userID)
+    public MemberMyPageResponse findByEmail(String email) {
+        return memberRepository.findByEmail(email)
+                .map(MemberMyPageResponse::of)
                 .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
-
-        return getMemberMyPageResponse(member);
     }
 
     @Override
@@ -70,7 +69,7 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
 
         memberRepository.save(member);
 
-        return getMemberMyPageResponse(member);
+        return MemberMyPageResponse.of(member);
     }
 
     @Override
@@ -85,19 +84,5 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
         }
 
         return "사용 가능한 아이디입니다.";
-    }
-
-    // ------------ inner method --------------
-    private MemberMyPageResponse getMemberMyPageResponse(Member member) {
-        MemberMyPageResponse memberMyPageResponse = new MemberMyPageResponse();
-        memberMyPageResponse.setUserId(member.getId());
-        memberMyPageResponse.setEmail(member.getEmail());
-        memberMyPageResponse.setName(member.getName());
-        memberMyPageResponse.setPhoneNum(member.getPhoneNum());
-        memberMyPageResponse.setAddress(member.getAddress());
-        memberMyPageResponse.setLoginPwd(member.getLoginPwd());
-        memberMyPageResponse.setAgreementOfMarketing(member.isAgreementOfMarketing());
-
-        return memberMyPageResponse;
     }
 }

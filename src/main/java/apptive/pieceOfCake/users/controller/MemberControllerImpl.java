@@ -27,14 +27,6 @@ public class MemberControllerImpl extends BaseControllerImpl<Member, MemberRespo
     }
 
     @Override
-    @PostMapping("/save")
-    public ResponseEntity<Long> save(@Valid @RequestBody MemberRequest memberRequest) {
-
-        Long userId = memberService.save(memberRequest);
-        return new ResponseEntity<>(userId, HttpStatus.CREATED);
-    }
-
-    @Override
     @GetMapping("/myPage/{userId}")
     public ResponseEntity<MemberMyPageResponse> find(@PathVariable("userId") Long userId) {
 
