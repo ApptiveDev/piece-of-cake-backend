@@ -2,6 +2,7 @@ package apptive.pieceOfCake.users.model;
 
 import apptive.pieceOfCake.auth.RoleName;
 import apptive.pieceOfCake.base.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -36,6 +37,7 @@ public class Member extends BaseEntity {
 
     private boolean agreementOfMarketing; // 마케팅 수신 동의 여부
 
-    @Enumerated(EnumType.STRING)
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private RoleName roleName; //ADMIN, STORE, USER
 }

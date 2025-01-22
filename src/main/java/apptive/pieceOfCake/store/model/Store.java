@@ -2,7 +2,10 @@ package apptive.pieceOfCake.store.model;
 
 import apptive.pieceOfCake.auth.RoleName;
 import apptive.pieceOfCake.base.BaseEntity;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,5 +40,7 @@ public class Store extends BaseEntity {
     private String logoImage; // 로고 이미지
     private String profileIntroduction; // 프로필 설명
 
+    @Enumerated(value = EnumType.STRING)
+    @Column(nullable = false)
     private RoleName roleName;
 }

@@ -59,7 +59,7 @@ public class SecurityConfig {
         http.authorizeHttpRequests(authorize -> authorize
                 .requestMatchers(permitAllWhiteList).permitAll()
                 // 가게 관리는 사장님 권한만 가능
-                .requestMatchers("/cake/**").hasRole(RoleName.ROLE_STORE.getRole())
+                //.requestMatchers("/cake/**").hasRole(RoleName.ROLE_STORE.getRole())
                 // 그 외 요청 체크
                 .anyRequest().authenticated()
         );

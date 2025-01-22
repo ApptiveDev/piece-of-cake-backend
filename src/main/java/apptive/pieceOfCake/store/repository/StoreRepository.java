@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface StoreRepository extends JpaRepository<Store, Long> {
@@ -19,4 +20,6 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
     List<Store> findStoresWithinRadius(@Param("latitude") double latitude,
                                        @Param("longitude") double longitude,
                                        @Param("radius") double radius);
+
+    Optional<Store> findByLoginId(String loginId);
 }

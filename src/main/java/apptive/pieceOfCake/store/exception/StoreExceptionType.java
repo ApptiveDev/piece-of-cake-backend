@@ -12,6 +12,7 @@ public enum StoreExceptionType implements BaseExceptionType {
 
     // 404 Not found
     NOT_FOUND_STORE(HttpStatus.NOT_FOUND, "가게를 찾을 수 없습니다."),
+    NOT_FOUND_OWNER(HttpStatus.NOT_FOUND, "사장님 정보를 찾을 수 없습니다."),
 
     // 417 Exception Failed
     SERVER_ERR(HttpStatus.EXPECTATION_FAILED, "저장에 실패하였습니다. 다시 시도해주세요.");
