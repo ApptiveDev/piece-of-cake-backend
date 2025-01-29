@@ -1,0 +1,4 @@
+rootProject.name = 'pieceOfCake'
+include 'module-common'
+include 'module-member'
+include 'module-store'
