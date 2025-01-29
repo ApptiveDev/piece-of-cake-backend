@@ -6,6 +6,7 @@ import apptive.com.store.store.model.request.StoreRegistrationRequest;
 import apptive.com.store.store.model.request.StoreUpdateRequest;
 import apptive.com.store.store.model.response.StoreCakeResponse;
 import apptive.com.store.store.model.response.StoreDetailResponse;
+import apptive.com.store.store.model.response.StoreOwnerInfo;
 import apptive.com.store.store.model.response.StoreResponse;
 import apptive.com.store.store.repository.StoreRepository;
 import org.springframework.data.domain.Page;
@@ -19,6 +20,7 @@ public interface StoreService extends BaseService<Store, StoreResponse, StoreRep
 
     StoreResponse save(Long storeId, StoreRegistrationRequest storeRegistrationRequest, MultipartFile profileImage, MultipartFile logoImage) throws IOException; // 가게 등록
     List<StoreResponse> findNearbyStores(double userLat, double userLon); // (위치 기반) 가게 찾기
+    StoreOwnerInfo find(Long userId); // 로그인용 찾기
     StoreDetailResponse findStore(Long storeId); // 가게 상세보기
     Page<StoreCakeResponse> findStoreCakes(Long storeId, Pageable pageable); // 가게 케이크 목록보기
     StoreResponse update(Long storeId, StoreUpdateRequest updateRequest); // 정보 업데이트

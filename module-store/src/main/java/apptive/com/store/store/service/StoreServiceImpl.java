@@ -10,6 +10,7 @@ import apptive.com.store.store.model.request.StoreRegistrationRequest;
 import apptive.com.store.store.model.request.StoreUpdateRequest;
 import apptive.com.store.store.model.response.StoreCakeResponse;
 import apptive.com.store.store.model.response.StoreDetailResponse;
+import apptive.com.store.store.model.response.StoreOwnerInfo;
 import apptive.com.store.store.model.response.StoreResponse;
 import apptive.com.store.store.repository.StoreRepository;
 import org.modelmapper.ModelMapper;
@@ -23,6 +24,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_OWNER;
 import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
@@ -90,6 +92,21 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
         }
 
         return storeResponses;
+    }
+
+    /**
+     * 사용자 idx 를 이용해 사용자 정보 조회
+     *
+     * @param userId 사용자 idx
+     * @return 사용자 정보 MemberMyPageResponse
+     */
+    @Override
+    @Transactional(readOnly = true)
+    public StoreOwnerInfo find(Long userId) {
+
+        return storeRepository.findById(userId)
+                .map(StoreOwnerInfo::of)
+                .orElseThrow(() -> new StoreException(NOT_FOUND_OWNER));
     }
 
     @Override

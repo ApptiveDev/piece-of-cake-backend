@@ -1,8 +1,8 @@
-package apptive.com.member.auth.config;
+package apptive.com.store.auth.config;
 
-import apptive.com.member.auth.handler.CustomAccessDeniedHandler;
-import apptive.com.member.auth.handler.CustomAuthenticationEntryPointHandler;
-import apptive.com.member.auth.jwt.JwtAuthFilter;
+import apptive.com.store.auth.handler.CustomAccessDeniedHandler;
+import apptive.com.store.auth.handler.CustomAuthenticationEntryPointHandler;
+import apptive.com.store.auth.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -44,8 +44,8 @@ public class SecurityConfig {
         // white list (Spring Security 체크 제외 목록)
         MvcRequestMatcher[] permitAllWhiteList = {
                 mvc.pattern("/"),
-                mvc.pattern("/user/login"), // 유저 로그인
-                mvc.pattern("/user/save"), // 유저 회원가입
+                mvc.pattern("/owner/login"), // 사장님 로그인
+                mvc.pattern("/owner/save"), // 사장님 회원가입
                 mvc.pattern("/favicon.ico"),
                 mvc.pattern("/resources/**"),
                 mvc.pattern("/js/**")
