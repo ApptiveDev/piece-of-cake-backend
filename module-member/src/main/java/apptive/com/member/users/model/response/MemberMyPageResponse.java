@@ -10,10 +10,7 @@ public record MemberMyPageResponse(
         String name,
         String phoneNum,
         String email,
-        String address,
-        String loginPwd,
-        boolean agreementOfMarketing,
-        RoleName roleName
+        String address
 ) {
 
     public static MemberMyPageResponse of(Member member) {
@@ -24,9 +21,6 @@ public record MemberMyPageResponse(
                 .phoneNum(member.getPhoneNum())
                 .email(member.getEmail())
                 .address(member.getAddress())
-                .loginPwd(member.getLoginPwd())
-                .agreementOfMarketing(member.isAgreementOfMarketing())
-                .roleName(member.getRoleName())
                 .build();
     }
 }

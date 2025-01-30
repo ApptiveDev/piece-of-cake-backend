@@ -4,13 +4,13 @@ import apptive.com.member.auth.login.domain.request.MemberLoginRequest;
 import apptive.com.member.auth.login.domain.response.MemberLoginResponse;
 import apptive.com.member.auth.login.service.LoginService;
 import apptive.com.member.users.model.request.MemberRequest;
+import apptive.com.member.users.model.request.MemberUpdateRequest;
+import apptive.com.member.users.model.response.MemberMyPageResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,5 +31,13 @@ public class LoginController {
         var loginInfo = loginService.memberLogin(loginRequest);
 
         return new ResponseEntity<>(loginInfo, HttpStatus.OK);
+    }
+
+    @PatchMapping("/user/update/{userId}")
+    public ResponseEntity<MemberMyPageResponse> update(@RequestBody @Valid MemberUpdateRequest memberUpdateRequest,
+                                                       @PathVariable("userId") Long userId) {
+
+        MemberMyPageResponse memberMyPageResponse = loginService.update(userId, memberUpdateRequest);
+        return new ResponseEntity<>(memberMyPageResponse, HttpStatus.OK);
     }
 }

@@ -24,15 +24,15 @@ public class MemberUpdateRequest {
     @NotBlank(message = "주소를 확인해주세요.")
     @Size(max = 40, message = "주소 최대 길이는 40자 입니다.")
     String address;
-    @NotBlank(message = "위도를 확인해주세요.")
+    @NotNull(message = "위도를 확인해주세요.")
     @Min(value = -90, message = "위도의 범위는 -90~+90 입니다.")
     @Max(value = 90, message = "위도의 범위는 -90~+90 입니다.")
     double latitude;
-    @NotBlank(message = "경도를 확인해주세요.")
+    @NotNull(message = "경도를 확인해주세요.")
     @Min(value = -180, message = "경도의 범위는 -180~+180 입니다.")
     @Max(value = 180, message = "경도의 범위는 -180~+180 입니다.")
     double longitude;
 
-    @NotBlank(message = "마케팅 수신 여부를 확인해주세요.")
+    @NotNull(message = "마케팅 수신 여부를 확인해주세요.")
     boolean agreementOfMarketing;
 }

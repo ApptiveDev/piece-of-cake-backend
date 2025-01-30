@@ -9,6 +9,7 @@ import apptive.com.member.users.model.response.MemberMyPageResponse;
 import apptive.com.member.users.model.response.MemberResponse;
 import apptive.com.member.users.repository.MemberRepository;
 import apptive.com.member.users.service.MemberService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,24 +27,15 @@ public class MemberControllerImpl extends BaseControllerImpl<Member, MemberRespo
 
     @Override
     @GetMapping("/myPage/{userId}")
-    public ResponseEntity<MemberMyPageResponse> find(@PathVariable("userId") Long userId) {
+    public ResponseEntity<MemberMyPageResponse> mypage(@PathVariable("userId") Long userId) {
 
-        MemberMyPageResponse memberMyPageResponse = memberService.find(userId);
-        return new ResponseEntity<>(memberMyPageResponse, HttpStatus.OK);
-    }
-
-    @Override
-    @PatchMapping("/update/{userId}")
-    public ResponseEntity<MemberMyPageResponse> update(@RequestBody MemberUpdateRequest memberUpdateRequest,
-                                                       @PathVariable("userId") Long userId) {
-
-        MemberMyPageResponse memberMyPageResponse = memberService.update(userId, memberUpdateRequest);
+        MemberMyPageResponse memberMyPageResponse = memberService.mypage(userId);
         return new ResponseEntity<>(memberMyPageResponse, HttpStatus.OK);
     }
 
     @Override
     @GetMapping("/checkEmail")
-    public ResponseEntity<String> checkSameEmail(MemberCheckSameEmail memberCheckSameEmail) {
+    public ResponseEntity<String> checkSameEmail(@RequestBody @Valid MemberCheckSameEmail memberCheckSameEmail) {
 
         String msg = memberService.checkSameEmail(memberCheckSameEmail);
 

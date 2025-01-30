@@ -1,23 +1,29 @@
 package apptive.com.member.order.model.response;
 
-import apptive.com.member.order.model.dto.OptionResponse;
+import apptive.com.member.order.model.OrderInfo;
+import apptive.com.member.order.model.dto.OrderOptionDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Getter @Setter
 @Builder
-public class OrderResponse {
+public record OrderResponse (Long orderId,
+                            String memo,
+                            List<OrderOptionDto> optionDtos) {
 
-    private Long orderId; // 주문 ID
+    public static OrderResponse of(OrderInfo orderInfo) {
 
-    private String storeName; // 가게 이름
-    private String pickUpTime;
-    private String cakeName; // 케이크 이름인
-    private String cakeImage; // 케이크 이미지
-    private int quantity; // 케이크 개수
-    private List<OptionResponse> options; // 옵션 리스트
-    private String memo; //배송 메모
+        List<OrderOptionDto> optionDtos = orderInfo.getOptions().stream()
+                .map(option -> new OrderOptionDto(option.getType(), option.getValue(), option.getPrice()))
+                .collect(Collectors.toList());
+
+        return OrderResponse.builder()
+                .orderId(orderInfo.getId())
+                .memo(orderInfo.getMemo())
+                .optionDtos(optionDtos)
+                .build();
+    }
 }

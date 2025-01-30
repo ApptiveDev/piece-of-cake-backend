@@ -3,12 +3,13 @@ package apptive.com.member.order.service;
 import apptive.com.member.order.exception.OrderException;
 import apptive.com.member.order.exception.OrderExceptionType;
 import apptive.com.member.order.model.OrderInfo;
-import apptive.com.member.order.model.PaymentStatus;
-import apptive.com.member.order.model.dto.Option;
-import apptive.com.member.order.model.dto.OptionResponse;
+import apptive.com.member.order.model.payment.PaymentInfo;
+import apptive.com.member.order.model.payment.PaymentStatus;
+import apptive.com.member.order.model.dto.OrderOption;
+import apptive.com.member.order.model.dto.OrderOptionDto;
 import apptive.com.member.order.model.request.OrderRequest;
+import apptive.com.member.order.model.response.OrderListResponse;
 import apptive.com.member.order.model.response.OrderResponse;
-import apptive.com.member.order.repository.OptionRepository;
 import apptive.com.member.order.repository.OrderRepository;
 import apptive.com.member.users.exception.MemberException;
 import apptive.com.member.users.model.Member;
@@ -25,10 +26,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.ArrayList;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
+import static apptive.com.member.order.exception.OrderExceptionType.NOT_FOUND_ORDER;
 import static apptive.com.member.users.exception.MemberExceptionType.NOT_FOUND_MEMBER;
 import static apptive.com.store.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
 import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
@@ -38,23 +39,20 @@ import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STO
 public class OrderServiceImpl implements OrderService{
 
     private final OrderRepository orderRepository;
-    private final OptionRepository optionRepository;
     private final CakeRepository cakeRepository;
     private final StoreRepository storeRepository;
     private final MemberRepository memberRepository;
 
     @Override
     @Transactional
-    public Long save(OrderRequest orderRequest) {
+    public Long save(Long cakeId, OrderRequest orderRequest) {
 
         // 데이터 유효성 확인
-        if (cakeRepository.findById(orderRequest.getCakeId()).isEmpty()) {
+        if (cakeRepository.findById(cakeId).isEmpty()) {
             throw new CakeException(NOT_FOUND_CAKE);
-        } else if (storeRepository.findById(orderRequest.getStoreId()).isEmpty()) {
-            throw new StoreException(NOT_FOUND_STORE);
-        } else if (memberRepository.findById(orderRequest.getMemberId()).isEmpty()) {
-            throw new MemberException(NOT_FOUND_MEMBER);
         }
+        Member member = memberRepository.findById(orderRequest.getMemberId())
+                .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
 
         PaymentStatus paymentStatus;
         try {
@@ -63,14 +61,12 @@ public class OrderServiceImpl implements OrderService{
             throw new OrderException(OrderExceptionType.CHECK_PAYMENT_STATUS);
         }
 
-        // null 값 최소화
-        orderRequest.initialize();
-
         // OrderInfo 객체 생성
         OrderInfo orderInfo = OrderInfo.builder()
-                .storeId(orderRequest.getStoreId())
+                .member(member)
                 .cakeId(orderRequest.getCakeId())
-                .memberId(orderRequest.getMemberId())
+                .storeId(orderRequest.getStoreId())
+                .options(new ArrayList<>())
                 .memo(orderRequest.getMemo())
                 .totalPrice(orderRequest.getTotalPrice())
                 .pickUpTime(orderRequest.getPickUpTime())
@@ -78,30 +74,30 @@ public class OrderServiceImpl implements OrderService{
                 .build();
 
         // 옵션 리스트 생성 및 Order와 연결
-        List<Option> options = orderRequest.getOptions().stream()
-                .map(optionRequest -> {
-                    Option option = new Option();
-                    option.setOption(optionRequest.getOption());
-                    option.setPrice(optionRequest.getPrice());
-                    option.setOrderInfo(orderInfo); // Order와 연결
-                    return option;
-                }).toList();
+        for (OrderOptionDto optionDto : orderRequest.getOptions()) {
+            OrderOption option = OrderOption.builder()
+                    .orderInfo(orderInfo)
+                    .type(optionDto.getType())
+                    .value(optionDto.getValue())
+                    .price(optionDto.getPrice())
+                    .build();
+            orderInfo.getOptions().add(option);
+        }
 
-        // Order에 옵션 리스트 설정
-        orderInfo.setOptions(options);
+        orderInfo.setPaymentInfo(new PaymentInfo());
+        // 결제 정보가 있는 경우
+        if (paymentStatus == PaymentStatus.PURCHASE) {
+            orderInfo.getPaymentInfo().saveFrom(orderRequest);
+        }
 
-        // OrderInfo 저장
-        OrderInfo savedOrderInfo = orderRepository.save(orderInfo);
+        orderRepository.save(orderInfo);
 
-        // 옵션들도 함께 저장
-        optionRepository.saveAll(options);
-
-        return savedOrderInfo.getId(); // 저장된 Order의 ID 반환
+        return orderInfo.getId();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Page<OrderResponse> findAll(Long memberId, String paymentStatus, Pageable pageable) {
+    public Page<OrderListResponse> findAll(Long memberId, String paymentStatus, Pageable pageable) {
 
         // 존재하는 멤버인지 확인
         Member member = memberRepository.findById(memberId)
@@ -123,29 +119,26 @@ public class OrderServiceImpl implements OrderService{
             Store store = storeRepository.findById(orderInfo.getStoreId())
                     .orElseThrow(() -> new StoreException(NOT_FOUND_STORE));
 
-            OrderResponse orderResponse = OrderResponse.builder()
+            OrderListResponse orderResponse = OrderListResponse.builder()
                     .orderId(orderInfo.getId())
-                    .storeName(store.getName())
+                    .storeName(store.getStoreInfo().getStoreName())
                     .pickUpTime(orderInfo.getPickUpTime())
                     .cakeName(cake.getName())
                     .cakeImage(cake.getCakeImage())
                     .quantity(1)
-                    .memo(orderInfo.getMemo())
                     .build();
 
-            // 옵션 리스트 변환
-            List<OptionResponse> optionResponses = orderInfo.getOptions().stream()
-                    .map(option -> {
-                        OptionResponse optionResponse = new OptionResponse();
-                        optionResponse.setOption(option.getOption());
-                        optionResponse.setPrice(option.getPrice());
-                        return optionResponse;
-                    })
-                    .collect(Collectors.toList());
-
-            orderResponse.setOptions(optionResponses);
             return orderResponse;
         });
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public OrderResponse findDetail(Long orderId) {
+
+        return orderRepository.findById(orderId)
+                .map(OrderResponse::of)
+                .orElseThrow(() -> new OrderException(NOT_FOUND_ORDER));
     }
 
     @Override
@@ -153,9 +146,9 @@ public class OrderServiceImpl implements OrderService{
     public Long delete(Long memberId, Long orderId) {
         // 주문 찾기
         OrderInfo orderInfo = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException(OrderExceptionType.NOT_FOUND_ORDER));
+                .orElseThrow(() -> new OrderException(NOT_FOUND_ORDER));
 
-        if (Objects.equals(orderInfo.getMemberId(), memberId)) {
+        if (Objects.equals(orderInfo.getMember().getId(), memberId)) {
             // 주문 삭제 (옵션도 함께 삭제됨)
             orderRepository.delete(orderInfo);
         } else {

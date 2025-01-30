@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface MemberController extends BaseController<Member, MemberResponse, MemberRepository> {
 
-    ResponseEntity<MemberMyPageResponse> find(@PathVariable Long userId); // 마이페이지
-    ResponseEntity<MemberMyPageResponse> update(MemberUpdateRequest memberUpdateRequest, @PathVariable Long userId); // 업데이트
+    ResponseEntity<MemberMyPageResponse> mypage(@PathVariable Long userId); // 마이페이지
     ResponseEntity<String> checkSameEmail(@RequestBody MemberCheckSameEmail memberCheckSameEmail); // 중복 이메일 확인
 }
