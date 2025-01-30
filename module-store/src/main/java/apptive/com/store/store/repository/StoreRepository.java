@@ -22,4 +22,5 @@ public interface StoreRepository extends JpaRepository<Store, Long> {
                                        @Param("radius") double radius);
 
     Optional<Store> findByLoginId(String loginId);
+    boolean existsByLoginId(String loginId);
 }
