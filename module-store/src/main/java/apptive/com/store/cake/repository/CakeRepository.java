@@ -10,6 +10,6 @@ import java.util.List;
 
 @Repository
 public interface CakeRepository extends JpaRepository<Cake, Long> {
-    List<Cake> findAllByStoreId(Long storeId);
+    Page<Cake> findAllByStoreId(Long storeId, Pageable pageable);
     Page<Cake> findAllByStoreIdOrderByName(Long storeId, Pageable pageable);
 }

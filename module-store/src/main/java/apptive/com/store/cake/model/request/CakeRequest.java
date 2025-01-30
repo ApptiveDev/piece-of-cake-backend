@@ -1,13 +1,15 @@
 package apptive.com.store.cake.model.request;
 
+import apptive.com.store.cake.model.option.dto.CakeOptionDto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter @Setter
 public class CakeRequest {
-
-    private Long storeId;
-    private String name; // 케이크명
-    private String description; // 케이크 이름
-    private int price; // 가격
+    private String name;
+    private String description;
+    private int price;
+    private List<CakeOptionDto> options;
 }

@@ -1,6 +1,6 @@
 package apptive.com.store.cake.model.response;
 
-import apptive.com.store.cake.model.response.option.*;
+import apptive.com.store.cake.model.option.dto.CakeOptionDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,9 +17,5 @@ public class CakeResponse {
     private String storeName;
     private String cakeImage;
 
-    private List<SizeOptionResponse> sizeOption;
-    private List<TasteOptionResponse> tasteOption;
-    private List<CreamOptionResponse> creamOption;
-    private List<ColorOptionResponse> colorOption;
-    private List<EtcOptionResponse> etcOption;
+    private List<CakeOptionDto> options;
 }

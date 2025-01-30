@@ -8,7 +8,7 @@ import lombok.Setter;
 public class MemberRequest {
 
     @NotBlank(message = "로그인 아이디(이메일)을 확인해주세요.")
-    @Pattern(regexp = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]+$", message = "이메일 형식을 확인해주세요.")
+    @Pattern(regexp = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]+@[a-zA-Z0-9.-]{1,30}$", message = "이메일 형식을 확인해주세요. (1~30자)")
     String email;
     @NotBlank(message = "로그인 비밀번호를 확인해주세요.")
     @Pattern(regexp = "[a-zA-Z0-9_!#$%&’*+/=?`{|}~^.-]{1,30}$", message = "비밀번호는 최소 1자에서 최대 30자까지만 가능합니다.")
