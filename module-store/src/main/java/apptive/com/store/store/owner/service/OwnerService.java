@@ -32,6 +32,8 @@ public class OwnerService {
                 .loginId(storeOwnerSignupRequest.getLoginId())
                 .loginPwd(bCryptPasswordEncoder.encode(storeOwnerSignupRequest.getLoginPwd()))
                 .roleName(RoleName.ROLE_STORE)
+                .ownerName(storeOwnerSignupRequest.getOwnerName())
+                .phoneNum(storeOwnerSignupRequest.getPhoneNum())
                 .build();
 
         storeRepository.save(store);
