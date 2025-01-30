@@ -1,4 +1,4 @@
-package apptive.com.member.order.model;
+package apptive.com.member.order.model.payment;
 
 import lombok.Getter;
 

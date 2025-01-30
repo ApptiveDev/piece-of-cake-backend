@@ -19,7 +19,7 @@ import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
-public class SecurityConfig {
+public class UserSecurityConfig {
 
     private final JwtAuthFilter jwtAuthFilter;
 
@@ -46,6 +46,7 @@ public class SecurityConfig {
                 mvc.pattern("/"),
                 mvc.pattern("/user/login"), // 유저 로그인
                 mvc.pattern("/user/save"), // 유저 회원가입
+                mvc.pattern("/user/checkEmail"), // 유저 아이디 중복 확인
                 mvc.pattern("/favicon.ico"),
                 mvc.pattern("/resources/**"),
                 mvc.pattern("/js/**")

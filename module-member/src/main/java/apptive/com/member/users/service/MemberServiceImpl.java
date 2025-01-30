@@ -1,6 +1,7 @@
 package apptive.com.member.users.service;
 
 import apptive.com.common.base.impl.BaseServiceImpl;
+import apptive.com.member.auth.login.domain.response.MemberInfoResponse;
 import apptive.com.member.users.exception.MemberException;
 import apptive.com.member.users.model.Member;
 import apptive.com.member.users.model.request.MemberCheckSameEmail;
@@ -25,10 +26,11 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
         this.memberRepository = memberRepository;
     }
 
-    // 사용 X
     @Override
-    public Long save(MemberRequest memberRequest) {
-        return null;
+    public MemberMyPageResponse mypage(Long userId) {
+        return memberRepository.findById(userId)
+                .map(MemberMyPageResponse::of)
+                .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
     }
 
     /**
@@ -39,37 +41,18 @@ public class MemberServiceImpl extends BaseServiceImpl<Member, MemberResponse, M
      */
     @Override
     @Transactional(readOnly = true)
-    public MemberMyPageResponse find(Long userId) {
+    public MemberInfoResponse find(Long userId) {
 
         return memberRepository.findById(userId)
-                .map(MemberMyPageResponse::of)
+                .map(MemberInfoResponse::of)
                 .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
     }
 
     @Override
-    public MemberMyPageResponse findByEmail(String email) {
+    public MemberInfoResponse findByEmail(String email) {
         return memberRepository.findByEmail(email)
-                .map(MemberMyPageResponse::of)
+                .map(MemberInfoResponse::of)
                 .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
-    }
-
-    @Override
-    @Transactional
-    public MemberMyPageResponse update(Long userID, MemberUpdateRequest updateRequest) {
-
-        Member member = memberRepository.findById(userID)
-                .orElseThrow(() -> new MemberException(NOT_FOUND_MEMBER));
-
-        member.setEmail(updateRequest.getEmail());
-        member.setName(updateRequest.getName());
-        member.setPhoneNum(updateRequest.getPhoneNum());
-        member.setAddress(updateRequest.getAddress());
-        member.setLoginPwd(updateRequest.getLoginPwd());
-        member.setAgreementOfMarketing(updateRequest.isAgreementOfMarketing());
-
-        memberRepository.save(member);
-
-        return MemberMyPageResponse.of(member);
     }
 
     @Override

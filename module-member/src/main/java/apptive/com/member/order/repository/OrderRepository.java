@@ -1,7 +1,7 @@
 package apptive.com.member.order.repository;
 
 import apptive.com.member.order.model.OrderInfo;
-import apptive.com.member.order.model.PaymentStatus;
+import apptive.com.member.order.model.payment.PaymentStatus;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

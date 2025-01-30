@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 
 @Builder
 public record CakeDetailResponse(Long cakeId,
-                                 String name,
+                                 String cakeName,
+                                 String storeName,
                                  String description,
                                  String cakeImage,
                                  int price,
@@ -24,7 +25,8 @@ public record CakeDetailResponse(Long cakeId,
 
         return CakeDetailResponse.builder()
                 .cakeId(cake.getId())
-                .name(cake.getName())
+                .cakeName(cake.getName())
+                .storeName(cake.getStore().getStoreInfo().getStoreName())
                 .description(cake.getDescription())
                 .cakeImage(cake.getCakeImage())
                 .price(cake.getPrice())
