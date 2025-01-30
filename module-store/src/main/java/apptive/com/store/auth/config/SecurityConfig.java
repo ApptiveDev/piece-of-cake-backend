@@ -46,6 +46,7 @@ public class SecurityConfig {
                 mvc.pattern("/"),
                 mvc.pattern("/owner/login"), // 사장님 로그인
                 mvc.pattern("/owner/save"), // 사장님 회원가입
+                mvc.pattern("/owner/check"), // 로그인 중복 확인
                 mvc.pattern("/favicon.ico"),
                 mvc.pattern("/resources/**"),
                 mvc.pattern("/js/**")

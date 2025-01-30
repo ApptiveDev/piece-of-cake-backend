@@ -58,6 +58,10 @@ public class OwnerService {
                 .build();
     }
 
+    public boolean checkLoginIdDuplication(String loginId) {
+        return storeRepository.existsByLoginId(loginId);
+    }
+
     // ----------- static method -----------
     public StoreOwnerInfo findByLoginId(String loginId) {
         return storeRepository.findByLoginId(loginId)
