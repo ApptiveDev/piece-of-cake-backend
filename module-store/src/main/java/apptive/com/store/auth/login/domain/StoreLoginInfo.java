@@ -5,12 +5,12 @@ import apptive.com.store.store.model.Store;
 import lombok.Builder;
 
 @Builder
-public record StoreInfo(Long storeId,
-                        String loginId,
-                        String loginPwd,
-                        RoleName roleName) {
+public record StoreLoginInfo(Long storeId,
+                             String loginId,
+                             String loginPwd,
+                             RoleName roleName) {
 
-    public static StoreInfo of(Store store) {
+    public static StoreLoginInfo of(Store store) {
 
         return builder()
                 .storeId(store.getId())

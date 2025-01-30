@@ -21,7 +21,7 @@ public class OwnerController {
     private final OwnerService ownerService;
 
     @PostMapping("/save")
-    public ResponseEntity<Long> save(@RequestBody StoreOwnerSignupRequest storeOwnerSignupRequest) {
+    public ResponseEntity<Long> save(@Valid @RequestBody StoreOwnerSignupRequest storeOwnerSignupRequest) {
 
         Long storeId = ownerService.save(storeOwnerSignupRequest);
 

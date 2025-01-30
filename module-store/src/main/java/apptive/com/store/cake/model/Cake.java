@@ -2,10 +2,8 @@ package apptive.com.store.cake.model;
 
 import apptive.com.common.base.BaseEntity;
 import apptive.com.store.cake.model.option.*;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
+import apptive.com.store.store.model.Store;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,22 +21,17 @@ import java.util.List;
 @SQLRestriction("is_deleted = 0")
 public class Cake extends BaseEntity {
 
-    @Column(nullable = false)
-    private Long storeId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "store_id", nullable = false)
+    private Store store;
 
+    @Column(nullable = false)
     private String name; // 케이크명
+
     private String description; // 케이크 이름
     private String cakeImage; // 케이크 대표 이미지
     private int price; // 가격
 
     @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SizeOption> sizeOptions = new ArrayList<>(); // 사이즈 옵션
-    @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<TasteOption> tasteOptions = new ArrayList<>(); // 맛 옵션
-    @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CreamOption> creamOptions = new ArrayList<>(); // 크림 옵션
-    @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ColorOption> colorOptions = new ArrayList<>(); // 색상 옵션
-    @OneToMany(mappedBy = "cake", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<EtcOption> etcOptions = new ArrayList<>(); // 기타 옵션
+    private List<CakeOption> options = new ArrayList<>();
 }
