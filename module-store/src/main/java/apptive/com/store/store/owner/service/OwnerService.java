@@ -4,7 +4,7 @@ import apptive.com.common.auth.RoleName;
 import apptive.com.store.auth.jwt.JwtProvider;
 import apptive.com.store.auth.login.domain.request.OwnerLoginRequest;
 import apptive.com.store.auth.login.domain.response.OwnerLoginResponse;
-import apptive.com.store.store.exception.StoreException;
+import apptive.com.common.store.exception.StoreException;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.request.StoreOwnerSignupRequest;
 import apptive.com.store.store.model.response.StoreOwnerInfo;
@@ -14,8 +14,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_OWNER;
-import static apptive.com.store.store.exception.StoreExceptionType.WRONG_PASSWORD;
+import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_OWNER;
+import static apptive.com.common.store.exception.StoreExceptionType.WRONG_PASSWORD;
 
 @Service
 @RequiredArgsConstructor
