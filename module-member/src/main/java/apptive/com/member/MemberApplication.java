@@ -12,7 +12,7 @@ import org.springframework.web.filter.HiddenHttpMethodFilter;
 @SpringBootApplication
 @EnableJpaAuditing
 @ComponentScan(basePackages = {"apptive.com.member", "apptive.com.common"})
-@EntityScan(basePackages = {"apptive.com.member", "apptive.com.store.cake", "apptive.com.store.store"})
+@EntityScan(basePackages = {"apptive.com.member", "apptive.com.store.cake.model", "apptive.com.store.store.model"})
 @EnableJpaRepositories(basePackages = {"apptive.com.member",
         "apptive.com.store.cake.repository", "apptive.com.store.store.repository"})
 public class MemberApplication {
