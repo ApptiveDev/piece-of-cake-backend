@@ -1,4 +1,4 @@
-package apptive.com.store.cake.exception;
+package apptive.com.common.cake.exception;
 
 import apptive.com.common.base.exception.BaseExceptionType;
 import org.springframework.http.HttpStatus;

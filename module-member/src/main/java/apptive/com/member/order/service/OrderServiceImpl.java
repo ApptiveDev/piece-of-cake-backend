@@ -1,12 +1,13 @@
 package apptive.com.member.order.service;
 
+import apptive.com.common.cake.exception.CakeException;
 import apptive.com.member.order.exception.OrderException;
 import apptive.com.member.order.exception.OrderExceptionType;
 import apptive.com.member.order.model.OrderInfo;
-import apptive.com.member.order.model.payment.PaymentInfo;
-import apptive.com.member.order.model.payment.PaymentStatus;
 import apptive.com.member.order.model.dto.OrderOption;
 import apptive.com.member.order.model.dto.OrderOptionDto;
+import apptive.com.member.order.model.payment.PaymentInfo;
+import apptive.com.member.order.model.payment.PaymentStatus;
 import apptive.com.member.order.model.request.OrderRequest;
 import apptive.com.member.order.model.response.OrderListResponse;
 import apptive.com.member.order.model.response.OrderResponse;
@@ -14,7 +15,6 @@ import apptive.com.member.order.repository.OrderRepository;
 import apptive.com.member.users.exception.MemberException;
 import apptive.com.member.users.model.Member;
 import apptive.com.member.users.repository.MemberRepository;
-import apptive.com.store.cake.exception.CakeException;
 import apptive.com.store.cake.model.Cake;
 import apptive.com.store.cake.repository.CakeRepository;
 import apptive.com.store.store.exception.StoreException;
@@ -29,9 +29,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Objects;
 
+import static apptive.com.common.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
 import static apptive.com.member.order.exception.OrderExceptionType.NOT_FOUND_ORDER;
 import static apptive.com.member.users.exception.MemberExceptionType.NOT_FOUND_MEMBER;
-import static apptive.com.store.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
 import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service

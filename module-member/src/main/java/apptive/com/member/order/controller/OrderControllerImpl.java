@@ -5,7 +5,6 @@ import apptive.com.member.order.model.response.OrderListResponse;
 import apptive.com.member.order.model.response.OrderResponse;
 import apptive.com.member.order.service.OrderService;
 import jakarta.validation.Valid;
-import jakarta.websocket.server.PathParam;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

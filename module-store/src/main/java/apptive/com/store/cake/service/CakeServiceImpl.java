@@ -1,7 +1,7 @@
 package apptive.com.store.cake.service;
 
 import apptive.com.common.util.S3Uploader;
-import apptive.com.store.cake.exception.CakeException;
+import apptive.com.common.cake.exception.CakeException;
 import apptive.com.store.cake.model.Cake;
 import apptive.com.store.cake.model.option.CakeOption;
 import apptive.com.store.cake.model.option.dto.CakeOptionDto;
@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static apptive.com.store.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
+import static apptive.com.common.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
 import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
