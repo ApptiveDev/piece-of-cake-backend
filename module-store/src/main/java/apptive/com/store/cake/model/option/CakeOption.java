@@ -1,6 +1,7 @@
 package apptive.com.store.cake.model.option;
 
 import apptive.com.common.base.BaseEntity;
+import apptive.com.common.cake.OptionType;
 import apptive.com.store.cake.model.Cake;
 import jakarta.persistence.*;
 import lombok.*;

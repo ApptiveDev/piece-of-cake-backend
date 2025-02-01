@@ -2,7 +2,7 @@ package apptive.com.member.order.model.dto;
 
 import apptive.com.common.base.BaseEntity;
 import apptive.com.member.order.model.OrderInfo;
-import apptive.com.store.cake.model.option.OptionType;
+import apptive.com.common.cake.OptionType;
 import jakarta.persistence.*;
 import lombok.*;
 
