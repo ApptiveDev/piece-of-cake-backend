@@ -17,7 +17,7 @@ import apptive.com.member.users.model.Member;
 import apptive.com.member.users.repository.MemberRepository;
 import apptive.com.store.cake.model.Cake;
 import apptive.com.store.cake.repository.CakeRepository;
-import apptive.com.store.store.exception.StoreException;
+import apptive.com.common.store.exception.StoreException;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.repository.StoreRepository;
 import lombok.AllArgsConstructor;
@@ -32,7 +32,7 @@ import java.util.Objects;
 import static apptive.com.common.cake.exception.CakeExceptionType.NOT_FOUND_CAKE;
 import static apptive.com.member.order.exception.OrderExceptionType.NOT_FOUND_ORDER;
 import static apptive.com.member.users.exception.MemberExceptionType.NOT_FOUND_MEMBER;
-import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
+import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
 @AllArgsConstructor

@@ -2,9 +2,7 @@ package apptive.com.store.store.service;
 
 import apptive.com.common.base.impl.BaseServiceImpl;
 import apptive.com.common.util.S3Uploader;
-import apptive.com.store.cake.model.Cake;
-import apptive.com.store.cake.repository.CakeRepository;
-import apptive.com.store.store.exception.StoreException;
+import apptive.com.common.store.exception.StoreException;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.request.StoreRegistrationRequest;
 import apptive.com.store.store.model.request.StoreUpdateRequest;
@@ -13,18 +11,14 @@ import apptive.com.store.store.model.value.BankInfo;
 import apptive.com.store.store.model.value.StoreInfo;
 import apptive.com.store.store.repository.StoreRepository;
 import org.modelmapper.ModelMapper;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
-import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_OWNER;
-import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
+import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_OWNER;
+import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
 public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, StoreRepository> implements StoreService {

@@ -1,13 +1,13 @@
 package apptive.com.store.auth.handler;
 
 import apptive.com.store.auth.login.domain.StoreLoginInfo;
-import apptive.com.store.store.exception.StoreException;
+import apptive.com.common.store.exception.StoreException;
 import apptive.com.store.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static apptive.com.store.store.exception.StoreExceptionType.NOT_FOUND_STORE;
+import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_STORE;
 
 @Service
 @RequiredArgsConstructor

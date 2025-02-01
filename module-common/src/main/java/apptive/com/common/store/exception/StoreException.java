@@ -1,4 +1,4 @@
-package apptive.com.store.store.exception;
+package apptive.com.common.store.exception;
 
 import apptive.com.common.base.exception.BaseException;
 import apptive.com.common.base.exception.BaseExceptionType;
