@@ -1,4 +1,4 @@
-package apptive.com.store.cake.model.option;
+package apptive.com.common.cake;
 
 public enum OptionType {
     SIZE,
