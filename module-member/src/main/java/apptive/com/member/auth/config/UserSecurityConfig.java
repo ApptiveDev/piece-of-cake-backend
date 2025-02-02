@@ -1,7 +1,7 @@
 package apptive.com.member.auth.config;
 
-import apptive.com.member.auth.handler.CustomAccessDeniedHandler;
-import apptive.com.member.auth.handler.CustomAuthenticationEntryPointHandler;
+import apptive.com.common.auth.handler.CustomAccessDeniedHandler;
+import apptive.com.common.auth.handler.CustomAuthenticationEntryPointHandler;
 import apptive.com.member.auth.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

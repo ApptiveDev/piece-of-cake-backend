@@ -1,16 +1,17 @@
 package apptive.com.store.store.service;
 
 import apptive.com.common.base.impl.BaseServiceImpl;
-import apptive.com.common.util.S3Uploader;
 import apptive.com.common.store.exception.StoreException;
+import apptive.com.common.util.S3Uploader;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.request.StoreRegistrationRequest;
 import apptive.com.store.store.model.request.StoreUpdateRequest;
-import apptive.com.store.store.model.response.*;
+import apptive.com.store.store.model.response.StoreMyPageResponse;
+import apptive.com.store.store.model.response.StoreOwnerInfo;
+import apptive.com.store.store.model.response.StoreResponse;
 import apptive.com.store.store.model.value.BankInfo;
 import apptive.com.store.store.model.value.StoreInfo;
 import apptive.com.store.store.repository.StoreRepository;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,13 +25,11 @@ import static apptive.com.common.store.exception.StoreExceptionType.NOT_FOUND_ST
 public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, StoreRepository> implements StoreService {
 
     private final StoreRepository storeRepository;
-    private final ModelMapper modelMapper;
     private final S3Uploader s3Uploader;
 
-    public StoreServiceImpl(StoreRepository storeRepository, ModelMapper modelMapper, S3Uploader s3Uploader) {
+    public StoreServiceImpl(StoreRepository storeRepository, S3Uploader s3Uploader) {
         super(storeRepository);
         this.storeRepository = storeRepository;
-        this.modelMapper = modelMapper;
         this.s3Uploader = s3Uploader;
     }
 

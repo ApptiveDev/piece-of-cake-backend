@@ -68,7 +68,7 @@ public class S3Uploader {
             throw new IllegalArgumentException("Original filename is null");
         }
 
-        File convertFile = new File(originalFilename);
+        File convertFile = new File("/home/ubuntu/apptive/v2/piece-of-cake-backend/tmp/" + originalFilename);
         if(convertFile.createNewFile()) {
             try(FileOutputStream fos = new FileOutputStream(convertFile)) {
                 fos.write(file.getBytes());
