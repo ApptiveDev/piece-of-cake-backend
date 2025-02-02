@@ -6,7 +6,7 @@ plugins {
 
 bootJar.enabled = true
 
-jar.enabled = false
+jar.enabled = true
 
 dependencies {
     // 필요한 의존성 추가

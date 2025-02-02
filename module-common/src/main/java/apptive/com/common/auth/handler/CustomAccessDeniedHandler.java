@@ -1,4 +1,4 @@
-package apptive.com.store.auth.handler;
+package apptive.com.common.auth.handler;
 
 import apptive.com.common.auth.exception.AuthExceptionType;
 import com.google.gson.JsonObject;
