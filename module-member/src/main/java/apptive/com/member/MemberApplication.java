@@ -7,7 +7,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = {
+        "apptive.com.member",
+        "apptive.com.common",
+        "apptive.com.store"
+})
 @EnableJpaAuditing
 @ComponentScan(basePackages = {"apptive.com.member", "apptive.com.common",
         "apptive.com.store.cake", "apptive.com.store.store"})
