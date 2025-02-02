@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
 @EnableJpaAuditing
-@ComponentScan(basePackages = {"apptive.com.member", "apptive.com.common"})
+@ComponentScan(basePackages = {"apptive.com.member", "apptive.com.common",
+        "apptive.com.store.store.repository", "apptive.com.store.cake.repository"})
 @EntityScan(basePackages = {"apptive.com.member", "apptive.com.store.cake.model", "apptive.com.store.store.model"})
 @EnableJpaRepositories(basePackages = {"apptive.com.member",
         "apptive.com.store.cake.repository", "apptive.com.store.store.repository"})
