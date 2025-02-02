@@ -44,3 +44,34 @@ subprojects {
         useJUnitPlatform()
     }
 }
+
+project(':module-common') {
+    jar {
+        enabled = true
+    }
+}
+
+project(':module-member') {
+    dependencies {
+        implementation(project(":module-common"))
+        implementation(project(":module-store"))
+    }
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+}
+
+project(':module-store') {
+    dependencies {
+        implementation(project(":module-common"))
+    }
+    bootJar {
+        enabled = true
+    }
+    jar {
+        enabled = false
+    }
+}
