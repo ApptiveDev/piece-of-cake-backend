@@ -8,6 +8,7 @@ import lombok.Builder;
 public record StoreOwnerInfo(Long storedId,
                              String loginId,
                              String loginPwd,
+                             boolean isStoreApplied,
                              RoleName roleName) {
 
     public static StoreOwnerInfo of(Store store) {
@@ -16,6 +17,7 @@ public record StoreOwnerInfo(Long storedId,
                 .storedId(store.getId())
                 .loginId(store.getLoginId())
                 .loginPwd(store.getLoginPwd())
+                .isStoreApplied(store.isStoreApplied())
                 .roleName(store.getRoleName())
                 .build();
     }

@@ -19,8 +19,8 @@ import java.util.function.Function;
 @Slf4j
 public class JwtProvider {
 
-    // jwt 만료 시간 1시간
-    private static final long JWT_TOKEN_VALID = (long) 1000 * 60 * 30;
+    // jwt 만료 시간 10시간
+    private static final long JWT_TOKEN_VALID = (long) 1000 * 60 * 60 * 10;
 
     @Value("${jwt.secret}")
     private String secret;

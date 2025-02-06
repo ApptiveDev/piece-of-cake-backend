@@ -34,6 +34,7 @@ public class OwnerService {
                 .roleName(RoleName.ROLE_STORE)
                 .ownerName(storeOwnerSignupRequest.getOwnerName())
                 .phoneNum(storeOwnerSignupRequest.getPhoneNum())
+                .isStoreApplied(false)
                 .build();
 
         storeRepository.save(store);
@@ -54,6 +55,8 @@ public class OwnerService {
         String accessToken = jwtProvider.generateAccessToken(userInfo.storedId());
 
         return OwnerLoginResponse.builder()
+                .storeId(userInfo.storedId())
+                .isStoreApplied(userInfo.isStoreApplied())
                 .accessToken(accessToken)
                 .build();
     }

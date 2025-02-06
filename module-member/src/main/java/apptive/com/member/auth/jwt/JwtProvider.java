@@ -20,7 +20,7 @@ import java.util.function.Function;
 public class JwtProvider {
 
     // jwt 만료 시간 1시간
-    private static final long JWT_TOKEN_VALID = (long) 1000 * 60 * 30;
+    private static final long JWT_TOKEN_VALID = (long) 1000 * 60 * 60 * 10;
 
     @Value("${jwt.secret}")
     private String secret;

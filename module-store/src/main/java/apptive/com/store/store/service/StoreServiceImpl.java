@@ -42,6 +42,9 @@ public class StoreServiceImpl extends BaseServiceImpl<Store, StoreResponse, Stor
 
         storeRegistrationRequest.initialize(); // 기본값 설정
 
+        // 가게 등록 여부 변경
+        store.setStoreApplied(true);
+
         // storeInfo가 null이면 새로 생성하여 설정
         if (store.getStoreInfo() == null) {
             store.setStoreInfo(new StoreInfo());

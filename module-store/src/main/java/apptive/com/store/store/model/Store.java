@@ -30,6 +30,9 @@ public class Store extends BaseEntity {
     private String ownerName; // 이름
     private String phoneNum; // 대표 연락
 
+    @Column(nullable = false)
+    private boolean isStoreApplied; // 가게 지원 여부 확인
+
     @Embedded
     private StoreInfo storeInfo; // 가게 정보
 

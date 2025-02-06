@@ -63,6 +63,7 @@ public class LoginService {
 
         return MemberLoginResponse.builder()
                 .accessToken(accessToken)
+                .userId(userInfo.userId())
                 .build();
     }
 
