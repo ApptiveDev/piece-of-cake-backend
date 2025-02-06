@@ -3,7 +3,6 @@ package apptive.com.member.users.controller;
 import apptive.com.common.base.BaseController;
 import apptive.com.member.users.model.Member;
 import apptive.com.member.users.model.request.MemberCheckSameEmail;
-import apptive.com.member.users.model.request.MemberUpdateRequest;
 import apptive.com.member.users.model.response.MemberMyPageResponse;
 import apptive.com.member.users.model.response.MemberResponse;
 import apptive.com.member.users.repository.MemberRepository;

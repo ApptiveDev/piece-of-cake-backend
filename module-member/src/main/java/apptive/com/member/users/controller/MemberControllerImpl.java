@@ -34,7 +34,7 @@ public class MemberControllerImpl extends BaseControllerImpl<Member, MemberRespo
     }
 
     @Override
-    @GetMapping("/checkEmail")
+    @PostMapping("/checkEmail")
     public ResponseEntity<String> checkSameEmail(@RequestBody @Valid MemberCheckSameEmail memberCheckSameEmail) {
 
         String msg = memberService.checkSameEmail(memberCheckSameEmail);
