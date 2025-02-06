@@ -37,7 +37,7 @@ public class OwnerController {
         return new ResponseEntity<>(loginInfo, HttpStatus.OK);
     }
 
-    @GetMapping("/check")
+    @PostMapping("/check")
     public ResponseEntity checkLoginId(@RequestBody @Valid StoreOwnerCheckLoginId storeOwnerCheckLoginId) {
 
         // 로그인 아이디 중복 여부 확인
