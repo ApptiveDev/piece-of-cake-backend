@@ -64,6 +64,8 @@ public class LoginService {
         return MemberLoginResponse.builder()
                 .accessToken(accessToken)
                 .userId(userInfo.userId())
+                .latitude(userInfo.latitude())
+                .longitude(userInfo.longitude())
                 .build();
     }
 

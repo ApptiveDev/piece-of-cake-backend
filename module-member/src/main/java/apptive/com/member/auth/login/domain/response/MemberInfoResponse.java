@@ -8,6 +8,8 @@ import lombok.Builder;
 public record MemberInfoResponse(Long userId,
                                 String loginId,
                                 String loginPwd,
+                                double latitude,
+                                double longitude,
                                 RoleName roleName) {
 
     public static MemberInfoResponse of(Member member) {
@@ -15,6 +17,8 @@ public record MemberInfoResponse(Long userId,
                 .userId(member.getId())
                 .loginId(member.getEmail())
                 .loginPwd(member.getLoginPwd())
+                .latitude(member.getLatitude())
+                .longitude(member.getLongitude())
                 .roleName(member.getRoleName())
                 .build();
     }
