@@ -8,6 +8,7 @@ import apptive.com.common.store.exception.StoreException;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.request.StoreOwnerSignupRequest;
 import apptive.com.store.store.model.response.StoreOwnerInfo;
+import apptive.com.store.store.model.value.StoreInfo;
 import apptive.com.store.store.repository.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -28,12 +29,25 @@ public class OwnerService {
     @Transactional
     public Long save(StoreOwnerSignupRequest storeOwnerSignupRequest) {
 
+        StoreInfo storeInfo = StoreInfo.builder()
+                .storeName("")
+                .address("")
+                .latitude(0)
+                .longitude(0)
+                .contact("")
+                .etcStoreInfo("")
+                .snsLink("")
+                .build();
+
         Store store = Store.builder()
                 .loginId(storeOwnerSignupRequest.getLoginId())
                 .loginPwd(bCryptPasswordEncoder.encode(storeOwnerSignupRequest.getLoginPwd()))
                 .roleName(RoleName.ROLE_STORE)
                 .ownerName(storeOwnerSignupRequest.getOwnerName())
                 .phoneNum(storeOwnerSignupRequest.getPhoneNum())
+                .storeInfo(storeInfo)
+                .bannerImage("")
+                .logoImage("")
                 .isStoreApplied(false)
                 .build();
 
