@@ -64,6 +64,8 @@ public class SecurityConfig {
         // form login disable
         http.formLogin(AbstractHttpConfigurer::disable);
 
+        http.cors();
+
         // logout disable
         http.logout(AbstractHttpConfigurer::disable);
 

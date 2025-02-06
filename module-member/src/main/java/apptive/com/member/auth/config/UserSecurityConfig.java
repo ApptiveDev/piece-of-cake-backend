@@ -61,6 +61,8 @@ public class UserSecurityConfig {
                 .anyRequest().authenticated()
         );
 
+        http.cors();
+
         // form login disable
         http.formLogin(AbstractHttpConfigurer::disable);
 
