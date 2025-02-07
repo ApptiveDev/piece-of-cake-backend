@@ -122,9 +122,11 @@ public class OrderServiceImpl implements OrderService{
             OrderListResponse orderResponse = OrderListResponse.builder()
                     .orderId(orderInfo.getId())
                     .storeName(store.getStoreInfo().getStoreName())
+                    .storeImage(store.getLogoImage())
                     .pickUpTime(orderInfo.getPickUpTime())
                     .cakeName(cake.getName())
                     .cakeImage(cake.getCakeImage())
+                    .total(orderInfo.getTotalPrice())
                     .quantity(1)
                     .build();
 

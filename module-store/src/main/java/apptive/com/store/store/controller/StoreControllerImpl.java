@@ -5,21 +5,16 @@ import apptive.com.common.base.impl.BaseServiceImpl;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.request.StoreRegistrationRequest;
 import apptive.com.store.store.model.request.StoreUpdateRequest;
-import apptive.com.store.store.model.response.StoreCakeResponse;
-import apptive.com.store.store.model.response.StoreDetailResponse;
 import apptive.com.store.store.model.response.StoreMyPageResponse;
 import apptive.com.store.store.model.response.StoreResponse;
 import apptive.com.store.store.repository.StoreRepository;
 import apptive.com.store.store.service.StoreService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.List;
 
 @RestController
 @RequestMapping("/store")

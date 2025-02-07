@@ -1,7 +1,7 @@
 package apptive.com.member.store.service;
 
-import apptive.com.store.cake.repository.CakeRepository;
 import apptive.com.common.store.exception.StoreException;
+import apptive.com.store.cake.repository.CakeRepository;
 import apptive.com.store.store.model.Store;
 import apptive.com.store.store.model.response.StoreDetailResponse;
 import apptive.com.store.store.model.response.StoreResponse;

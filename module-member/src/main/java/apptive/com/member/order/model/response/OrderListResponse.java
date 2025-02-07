@@ -10,6 +10,7 @@ public class OrderListResponse {
 
     private Long orderId;
     private String storeName;
+    private String storeImage;
 
     private String cakeName;
     private String cakeImage;
